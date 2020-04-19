@@ -6,7 +6,7 @@ import {getMembers} from '../redux/actions/groups';
 import React, { useState,useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import {Col, Nav, Row, Tab, Spinner} from 'react-bootstrap';
+import {Col, Nav, Row, Tab, Tabs, Spinner} from 'react-bootstrap';
 
 const Groupviewer = (props) => {
     const [loading, setLoading] = useState(true)
@@ -57,7 +57,7 @@ const Groupviewer = (props) => {
                                     <Nav.Link eventKey="second">Members</Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link eventKey="third">Calendar</Nav.Link>
+                                    <Nav.Link eventKey="third">Meetings</Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
                                     <Nav.Link 
@@ -83,7 +83,14 @@ const Groupviewer = (props) => {
                                 }
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="third">
-                                    <Calendar/>
+                                <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
+                                    <Tab eventKey="list" title="List">
+                                        {'Things'}
+                                    </Tab>
+                                    <Tab eventKey="calendar" title="Calendar">
+                                        <Calendar/>
+                                    </Tab>
+                                </Tabs>
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="fourth">
                                     <LeaveGroup
