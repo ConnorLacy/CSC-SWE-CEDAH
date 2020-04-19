@@ -28,7 +28,13 @@ const Calendar = () => {
     }
     
     return (
-        <Table striped bordered hover size="lg" responsive>
+        <Table 
+            striped 
+            bordered 
+            hover 
+            size="lg" 
+            responsive
+            >
             <thead>
                 <tr>
                     <th>Time</th>
