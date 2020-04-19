@@ -37,11 +37,15 @@ public class Meeting {
 
     @NotNull
     @ManyToOne
+    @Getter
+    @Setter
     @JoinColumn(name="group_id", referencedColumnName = "group_id")
     private MeetupGroup group;
     
     @NotNull
     @OneToOne
+    @Getter
+    @Setter
     @JoinColumn(name="creator_id", referencedColumnName = "id")
     private ApplicationUser user;
 }
