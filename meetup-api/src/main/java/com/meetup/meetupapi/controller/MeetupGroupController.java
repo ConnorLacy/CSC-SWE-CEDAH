@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.meetup.meetupapi.model.GroupMembership;
+import com.meetup.meetupapi.model.Meeting;
 import com.meetup.meetupapi.model.MeetupGroup;
 import com.meetup.meetupapi.model.UserAvailability;
 import com.meetup.meetupapi.repo.GroupMembershipRepository;
+import com.meetup.meetupapi.repo.MeetingRepository;
 import com.meetup.meetupapi.repo.MeetupGroupRepository;
 import com.meetup.meetupapi.repo.UserAvailabilityRepository;
 
@@ -25,14 +27,17 @@ public class MeetupGroupController {
     private MeetupGroupRepository meetupGroupRepository;
     private GroupMembershipRepository groupMembershipRepository;
     private UserAvailabilityRepository userAvailabilityRepository;
+    private MeetingRepository meetingRepository;
 
     public MeetupGroupController(
             MeetupGroupRepository meetupGroupRepository, 
             GroupMembershipRepository groupMembershipRepository,
-            UserAvailabilityRepository userAvailabilityRepository){
+            UserAvailabilityRepository userAvailabilityRepository,
+            MeetingRepository meetingRepository){
         this.meetupGroupRepository = meetupGroupRepository;
         this.groupMembershipRepository = groupMembershipRepository;
         this.userAvailabilityRepository = userAvailabilityRepository;
+        this.meetingRepository = meetingRepository;
     }
 
     @PostMapping("/retrieve")
@@ -63,13 +68,18 @@ public class MeetupGroupController {
         return ResponseEntity.status(status).body(response);
     }
 
-    @PostMapping("/members")
-    public ResponseEntity<?> getMembers(@RequestParam("id") int groupId){
+    @PostMapping("/details")
+    public ResponseEntity<?> getDetails(@RequestParam("id") Long groupId){
         JSONObject response = new JSONObject();
+        JSONObject container = new JSONObject();
         JSONArray memberArr = new JSONArray();
+        JSONArray meetingArr = new JSONArray();
+
         int status = 200;
         List<GroupMembership> members;
+        List<Meeting> meetingList;
         try {
+            //Get members
             members = groupMembershipRepository.findMembers(groupId);
             for (GroupMembership groupMembership : members) {
                 JSONObject inner = new JSONObject();
@@ -79,7 +89,20 @@ public class MeetupGroupController {
                 inner.put("phone", groupMembership.getUser().getPhone());
                 memberArr.add(inner);
             }
-            response.put("data", memberArr);
+            container.put("members", memberArr);
+
+            //Get meetings
+            meetingList = meetingRepository.findAllById(groupId);
+            for(Meeting meeting: meetingList){
+                JSONObject inner = new JSONObject();
+                inner.put("id", meeting.getId());
+                inner.put("creator", meeting.getUser().getFullName());
+                inner.put("start_time", meeting.getMeeting_start_time());
+                inner.put("end_time", meeting.getMeeting_end_time());
+                meetingArr.add(inner);
+            }
+            container.put("meetings", meetingArr);
+            response.put("data", container);
 
         } catch(Exception e){
             response.put("message", "Unable to retrieve group members");
@@ -180,7 +203,7 @@ public class MeetupGroupController {
     */
     @PostMapping("/availabilities")
     public ResponseEntity<?> getAvailabilities(
-            @RequestParam("id") int groupId
+            @RequestParam("id") Long groupId
     ){
         List<GroupMembership> members;
         List<UserAvailability> availabilitiesList;
