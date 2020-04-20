@@ -18,7 +18,7 @@ const Meeting = (props) => {
             <Card.Header style={{background: 'white', color: 'black'}}>{props.meeting.MeetingNo}</Card.Header>
             <Card.Img variant="top" src={icon}/>
             <Card.Body>
-                <Card.Title>{props.meeting.Team}</Card.Title>
+                <Card.Title>Created By: {props.meeting.creator}</Card.Title>
                 <Card.Text>
                     Some quick example text to build on the card title and make up the bulk of
                     the card's content.<br/><br/>
