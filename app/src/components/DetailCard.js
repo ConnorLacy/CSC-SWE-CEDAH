@@ -7,41 +7,43 @@ import mail from '../assets/mail.svg';
 import user from '../assets/user.svg';
 
 const DetailCard = (props) => {
+    var title;
+    var body;
 
     if(props.meeting){
-        var title = (
+        title = (
             <>  
-                <img src={user} className="icon"/>
+                <img alt="" src={user} className="icon"/>
                 <strong>{formatName(props.meeting.creator)}</strong>
             </>
         )
-        var body = (
+        body = (
             <>
                 <p>
-                    <img className="icon" src={clock}/>
+                    <img alt="" className="icon" src={clock}/>
                     <span>Start Time: {props.meeting.start_time}</span>
                 </p>
                 <p>
-                    <img className="icon" src={clock}/>
+                    <img alt="" className="icon" src={clock}/>
                     <span>End Time: {props.meeting.end_time}</span>
                 </p>
             </>
         )
     }
     else {
-        var title = (
+        title = (
             <>
                 <strong>{formatName(props.member.name)}</strong>
             </>
         )
-        var body = (
+        body = (
             <>
                 <p>
-                    <img className="icon" src={phone}/>
+                    <img alt="" className="icon" src={phone}/>
                     <span>{props.member.phone}</span>
                 </p>
                 <p>
-                    <img className="icon" src={mail}/>
+                    <img alt="" className="icon" src={mail}/>
                     <a href={"mailto: "  + props.member.email}>
                         <span>{props.member.email}</span> 
                     </a>
