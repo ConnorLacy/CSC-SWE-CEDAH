@@ -25,10 +25,15 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+.btn-success:not(:disabled):not(.disabled).active {
+    background-color: #28a745 !important;
+    border-color: #28a745 !important;
+}
+
 .page {
     background: white;
     margin: auto;
-    height: 100vh;
+    // height: 100vh;
     width: 100%;
     max-width: 2000px;
 
@@ -134,6 +139,10 @@ body {
             width: 80%;
             text-align: center;
         }
+    }
+    
+    .row h1 {
+        margin-bottom: 25px;
     }
 }
 

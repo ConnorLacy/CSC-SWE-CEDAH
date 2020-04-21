@@ -37,6 +37,7 @@ const MyNav = (props) => {
                         <Button as={NavLink} 
                                 to="/dashboard"
                                 variant="success"
+                                className="mynav button"
                                 style={{margin: '0px 10px'}}>Dashboard</Button>
                         <Button as={NavLink} to="/logout">Logout</Button>
                     </>
@@ -45,6 +46,7 @@ const MyNav = (props) => {
                         <Button as={NavLink} 
                                 to="/login"
                                 variant="light" 
+                                className="mynav button"
                                 style={{margin: '0px 10px'}}>Login</Button>
                         <Button as={NavLink} to="/signup">Signup</Button>
                     </>
