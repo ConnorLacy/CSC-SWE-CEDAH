@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {getUserInfo} from '../redux/actions/user';
 import {getMyGroups} from '../redux/actions/groups';
-import Meeting from '../components/Meeting';
+import DetailCard from '../components/DetailCard';
 import Group from '../components/Group';
 import {CardDeck, CardColumns, Spinner} from 'react-bootstrap';
 import DashboardControl from '../components/DashboardControl';
@@ -17,7 +17,6 @@ const Dashboard = (props) => {
     }, [loading])
 
     const getData = async () => {
-        console.log(props)
         setLoading(true)
         props.getMyGroups(1, props.token)
         setLoading(false)
@@ -44,7 +43,15 @@ const Dashboard = (props) => {
                         :
                         <CardDeck style={{width: '80%', margin: 'auto'}}>
                             <CardColumns>
-                                {/* {allMeetings} */}
+                                {props.meetings ? 
+                                    props.meetings.map((meeting) => (
+                                        <DetailCard
+                                            key={meeting.id}
+                                            meeting={meeting}/>
+                                    ))
+                                    : 
+                                    <Spinner animation="border" size="lg"/>
+                                }
                             </CardColumns>
                         </CardDeck>
                     }
@@ -62,7 +69,8 @@ const Dashboard = (props) => {
         token: state.user.token,
         username: state.user.username,
         userId: state.user.profile.id,
-        groupList: state.groups.groupList
+        groupList: state.groups.groupList,
+        meetings: state.groups.meetings
     })
     
     const mapDispatchToProps = dispatch => ({
