@@ -1,32 +1,51 @@
 import React from 'react';
+import {formatName} from '../helper';
 import {Card} from 'react-bootstrap';
+import clock from '../assets/clock.svg';
+import phone from '../assets/phone.svg';
+import mail from '../assets/mail.svg';
+import user from '../assets/user.svg';
 
 const DetailCard = (props) => {
+
     if(props.meeting){
         var title = (
-            <>
-                <strong>Owner: {props.meeting.owner}</strong>
+            <>  
+                <img src={user} className="icon"/>
+                <strong>{formatName(props.meeting.creator)}</strong>
             </>
         )
         var body = (
             <>
-                <strong>Start Time: {props.meeting.start_time}</strong>
-                <br/> 
-                <strong>End Time: {props.meeting.end}</strong> 
+                <p>
+                    <img className="icon" src={clock}/>
+                    <span>Start Time: {props.meeting.start_time}</span>
+                </p>
+                <p>
+                    <img className="icon" src={clock}/>
+                    <span>End Time: {props.meeting.end_time}</span>
+                </p>
             </>
-            )
+        )
     }
     else {
         var title = (
             <>
-                <strong>{props.member.name}</strong>
+                <strong>{formatName(props.member.name)}</strong>
             </>
         )
         var body = (
             <>
-                <strong>Phone: {props.member.phone}</strong>
-                <br/> 
-                <strong>Email: {props.member.email}</strong> 
+                <p>
+                    <img className="icon" src={phone}/>
+                    <span>{props.member.phone}</span>
+                </p>
+                <p>
+                    <img className="icon" src={mail}/>
+                    <a href={"mailto: "  + props.member.email}>
+                        <span>{props.member.email}</span> 
+                    </a>
+                </p>
             </>
         )
     }
@@ -38,7 +57,6 @@ const DetailCard = (props) => {
             <Card.Body>
                 <Card.Text>
                 {body}
-                With supporting text below as a natural lead-in to additional content.
                 </Card.Text>
             </Card.Body>
         </Card>
