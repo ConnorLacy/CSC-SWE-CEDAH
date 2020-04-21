@@ -52,7 +52,15 @@ body {
         text-align: center;
     }
 
-    
+    .hat {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 30vh;
+        width: 90%;
+        text-align: center;
+        margin: 50px auto auto;
+    } 
 }
 .page.loader {
     display: flex;
