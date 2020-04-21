@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
-import {getUserInfo} from '../redux/actions/user';
+import {formatName} from '../helper';
 import {getMyGroups} from '../redux/actions/groups';
 import DetailCard from '../components/DetailCard';
 import Group from '../components/Group';
@@ -23,9 +23,10 @@ const Dashboard = (props) => {
     }
 
     if(!loading){
+        let name = formatName(props.fullName).split(' ')[0]
         return (
             <div className="page dashboard">
-                <h1>Welcome to your Dashboard, {props.username}!</h1>
+                <h1>Welcome to your Dashboard, {name}!</h1>
                 <DashboardControl toggle={toggleShowGroups}/>
                     { 
                         showGroups ? 
@@ -67,14 +68,13 @@ const Dashboard = (props) => {
     
     const mapStateToProps = state => ({
         token: state.user.token,
-        username: state.user.username,
+        fullName: state.user.profile.fullName,
         userId: state.user.profile.id,
         groupList: state.groups.groupList,
         meetings: state.groups.meetings
     })
     
     const mapDispatchToProps = dispatch => ({
-        getUserInfo : (username, token) => dispatch(getUserInfo(username, token)),
         getMyGroups : (userId, token) => dispatch(getMyGroups(userId, token))
     })
     
