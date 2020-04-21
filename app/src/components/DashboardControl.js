@@ -1,14 +1,9 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {NavLink} from 'react-router-dom';
-import {Button, ButtonGroup, Dropdown} from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
 
 const DashboardControl = (props) => {
-    const [disabled, disable] = useState(true);
-
-    const toggle = () => {
-        props.toggle(!disabled)
-        disable(!disabled)
-    }
+    let type = props.tab.trim().toLowerCase()
     return (
         <>
         <div className="control-bar">
@@ -16,45 +11,36 @@ const DashboardControl = (props) => {
                 className="filters"
                 style={{
                     display: 'flex',
-                    padding: '0 25% 0 0',
-                    justifyContent: 'space-between',
-                    width: '50%'
+                    alignItems: 'flex-end',
+                    width: '65%'
                 }}>
-                <Dropdown as={ButtonGroup}>
-                    <Button variant="light">Sort By</Button>
-                    <Dropdown.Toggle split variant="light" id="dropdown-split-basic" />
-                    <Dropdown.Menu>
-                        <Dropdown.Item>Group</Dropdown.Item>
-                        <Dropdown.Item>Time</Dropdown.Item>
-                    </Dropdown.Menu>
-                </Dropdown>  
-                <Button 
-                    to="/group/add"
-                    variant="primary"
-                    onClick={toggle}
-                    disabled={disabled}>Groups</Button>    
-                <Button 
-                    to="/group/join"
-                    variant="primary"
-                    onClick={toggle}
-                    disabled={!disabled}>Meetings</Button>
+                <h1 style={{margin: 'unset'}}>{props.tab}</h1>
             </div>
             <div 
                 className="controls"
                 style={{
                     display: 'flex',
-                    padding: '0 0 0 32%',
-                    width: '50%',
+                    width: '35%',
                     justifyContent: 'space-between',
+                    alignItems: 'flex-end',
                 }}>
-                <Button 
-                    as={NavLink} 
-                    to="/group/add"
-                    variant="light">Create Group</Button>    
-                <Button 
-                    as={NavLink} 
-                    to="/group/join"
-                    variant="light">Join Group</Button>
+                {(type === 'groups') ?
+                    <>
+                        <Button 
+                            as={NavLink} 
+                            to="/group/add"
+                            variant="light">Create Group</Button>    
+                        <Button 
+                            as={NavLink} 
+                            to="/group/join"
+                            variant="light">Join Group</Button>
+                    </>
+                :
+                    <Button 
+                        as={NavLink} 
+                        to="/group/add"
+                        variant="light">Create Meeting</Button>    
+                }
             </div>
         </div>
         <br/>
