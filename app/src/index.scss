@@ -151,15 +151,14 @@ body {
         }
     }
 }
+.nav-link {
+    color: black
+}
 
 .group-viewer {
     .nav-link:active {
         color: white;
     }
-    .nav-link {
-        color: black
-    }
-
     .leave-group.nav-link.active{
         background: red;
         color: white;
