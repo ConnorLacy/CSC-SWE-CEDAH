@@ -1,5 +1,4 @@
 export const getMyGroups = (userId, token) => {
-    console.log('made it to getMyGroups\nUser id: ', userId, '\nToken: ', token)
     return async dispatch => {
         return fetch(`/groups/retrieve?id=${userId}`, {
             method: 'POST',
@@ -12,7 +11,7 @@ export const getMyGroups = (userId, token) => {
         })
         .then(response => response.json())
         .then(data => {
-            console.log('Response: ', data.groups)
+            console.log('groups received')
             dispatch(setGroups(data.groups))
         })
         .catch(err => console.log('Error: ', err))
@@ -20,7 +19,6 @@ export const getMyGroups = (userId, token) => {
 }
 
 export const getDetails = (groupId, token) => {
-    console.log('entered')
     return async dispatch => {
         return fetch(`/groups/details?id=${groupId}`, {
             method: 'POST',
@@ -47,7 +45,6 @@ export const getDetails = (groupId, token) => {
 }
 
 export const addGroup = (userId, token, groupName) => {
-    console.log('made it to addGroup')
     return dispatch => {
         return fetch(`/groups/add?id=${userId}&name=${groupName}`, {
             method: 'POST',
@@ -78,7 +75,6 @@ export const addGroup = (userId, token, groupName) => {
 }
 
 export const joinGroup = (userId, token, groupName) => {
-    console.log('made it to joinGroup')
     return dispatch => {
         return fetch(`/groups/join?id=${userId}&name=${groupName}`, {
             method: 'POST',
@@ -98,7 +94,7 @@ export const joinGroup = (userId, token, groupName) => {
                 message = 'You are already a member of this group'
             }
             else {
-                console.log('Response: ', data.data)
+                console.log('Joined group')
                 success = true
                 message = data.data
             }
@@ -109,7 +105,6 @@ export const joinGroup = (userId, token, groupName) => {
 }
 
 export const leaveGroup = (groupId, userId, token) => {
-    console.log('leaving group...')
     return dispatch => {
         return fetch(`/groups/leave?groupId=${groupId}&userId=${userId}`, {
             method: 'POST',
@@ -129,7 +124,7 @@ export const leaveGroup = (groupId, userId, token) => {
                     message = data.message
                 }
                 else {
-                    console.log('Response: ', data.data)
+                    console.log('Left group')
                     success = true
                     message = data.data
                 }
