@@ -91,10 +91,6 @@ body {
     }
 }
 
-.login {
-}
-
-
 .dashboard {
     h1 {
         margin: 50px auto;
@@ -118,6 +114,26 @@ body {
     .nav-link.leave-group {
         font-weight: 700;
         color: red;
+    }
+    .header.back-button {
+        width: 95%;
+        margin: auto;
+        padding: 2.5rem;
+        display: flex; 
+        align-items: center;
+        flex-direction: row;
+
+        img {
+            width: 20%;
+            height: 2em;
+        }
+        img:hover{
+            cursor: pointer;
+        }
+        h1 {
+            width: 80%;
+            text-align: center;
+        }
     }
 }
 
@@ -158,4 +174,9 @@ body {
 
 th, td {
     text-align: center !important;
+}
+
+.icon {
+    height: 2rem;
+    margin-right: 10px;
 }
