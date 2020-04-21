@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {hideModal} from './redux/actions/app';
-import Profile from './pages/Profile';
 import MyNav from './components/MyNav';
 import MyModal from './components/MyModal';
 import Welcome from './pages/Welcome';
@@ -37,7 +36,6 @@ const App = (props) => {
           <Route href="" path="/signup" exact component={Signup}/>
           { props.isAuthenticated ?
               <> 
-                <Route href="" path="/profile" exact component = {Profile}/>
                 <Route href="" path="/dashboard" exact component = {Dashboard}/>
                 <Route href="" path="/group/view/:name/:id" component={Groupviewer}/>
                 <Route href="" path="/group/add" component={AddGroup}/>
