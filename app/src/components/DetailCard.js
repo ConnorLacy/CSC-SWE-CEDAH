@@ -55,9 +55,7 @@ const DetailCard = (props) => {
                 <strong>{title}</strong>
                 </Card.Header>
             <Card.Body>
-                <Card.Text>
                 {body}
-                </Card.Text>
             </Card.Body>
         </Card>
     )
