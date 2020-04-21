@@ -1,3 +1,4 @@
+import back from '../assets/back.svg';
 import Calendar from '../components/Calendar';
 import LeaveGroup from '../components/LeaveGroup';
 import DetailCard from '../components/DetailCard';
@@ -32,7 +33,12 @@ const Groupviewer = (props) => {
     else {
         return (
             <div className="page group-viewer">
-                <h1 className="slimshady">{groupName}</h1>
+                <div className="header back-button">
+                        <img 
+                            onClick={props.history.goBack}
+                            src={back}/>
+                        <h1>{groupName}</h1>
+                </div>
                 <Tab.Container defaultActiveKey="first" >
                     <Row
                         style={{
@@ -89,11 +95,14 @@ const Groupviewer = (props) => {
                                 <Tabs defaultActiveKey="list" id="uncontrolled-tab-example">
                                     <Tab eventKey="list" title="List">
                                         {props.meetings ?
-                                            props.meetings.map((meeting, index) => (
-                                                <DetailCard
-                                                    key={index}
-                                                    meeting={meeting}/>
-                                            )) :
+                                            (props.meetings.length > 0) ? 
+                                                props.meetings.map((meeting, index) => (
+                                                    <DetailCard
+                                                        key={index}
+                                                        meeting={meeting}/>
+                                                )) :
+                                                <p>You have no meetings at this time.</p>
+                                            :
                                             <Spinner animation="border" size="lg"/>
                                         }
                                     </Tab>
