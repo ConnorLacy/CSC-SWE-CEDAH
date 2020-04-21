@@ -35,6 +35,7 @@ const Groupviewer = (props) => {
             <div className="page group-viewer">
                 <div className="header back-button">
                         <img 
+                            alt=""
                             onClick={props.history.goBack}
                             src={back}/>
                         <h1>{groupName}</h1>

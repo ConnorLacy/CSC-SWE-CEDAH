@@ -9,7 +9,7 @@ const Group = (props) => {
         <Card style={{marginBottom: 15}}>
             <Card.Header as="h5" style={{display: 'flex'}}>
                 <div style={{display: 'flex', alignItems: 'center'}}>
-                    <img src={group} style={{height: '3em'}}/>
+                    <img alt="" src={group} style={{height: '3em'}}/>
                 </div>
                 <span style={{padding: '15px'}}>
                     <strong>{props.group.group_name}</strong><br/>
