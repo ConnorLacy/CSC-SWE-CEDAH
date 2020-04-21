@@ -61,7 +61,15 @@ const Dashboard = (props) => {
     }
     else{
         return (
-            <Spinner animation="border" size="lg"/>
+            <div className="page loader">
+                <Spinner 
+                    animation="border" 
+                    size="lg" 
+                    style={{
+                        width: '4em', 
+                        height: '4em',
+                    }}/>
+            </div>
             )
         }
     }

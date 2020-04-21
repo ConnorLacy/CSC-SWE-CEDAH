@@ -51,6 +51,16 @@ body {
         padding: 20px;
         text-align: center;
     }
+
+    
+}
+.page.loader {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
 }
 
 .welcome {
