@@ -26,7 +26,7 @@ const Dashboard = (props) => {
     if(!loading){
         return (
             <div className="page dashboard">
-                <h1>Welcome to the Dashboard, {props.username}!</h1>
+                <h1>Welcome to your Dashboard, {props.username}!</h1>
                 <DashboardControl toggle={toggleShowGroups}/>
                     { 
                         showGroups ? 
