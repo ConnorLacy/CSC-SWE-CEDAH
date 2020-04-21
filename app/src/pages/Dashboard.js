@@ -4,13 +4,17 @@ import {formatName} from '../helper';
 import {getMyGroups} from '../redux/actions/groups';
 import DetailCard from '../components/DetailCard';
 import Group from '../components/Group';
-import {CardDeck, CardColumns, Spinner} from 'react-bootstrap';
+import Calendar from '../components/Calendar';
+import {CardDeck, CardColumns, Spinner, Tab, Row, Col, Nav} from 'react-bootstrap';
 import DashboardControl from '../components/DashboardControl';
 
-const Dashboard = (props) => {
+import user from '../assets/user.svg';
+import phone from '../assets/phone.svg';
+import mail from '../assets/mail.svg';
+
+const NewDashboard = (props) => {
 
     const [loading, setLoading] = useState(true)
-    const [showGroups, toggleShowGroups] = useState(true)
 
     useEffect(() => {
         getData();
@@ -23,39 +27,96 @@ const Dashboard = (props) => {
     }
 
     if(!loading){
-        let name = formatName(props.fullName).split(' ')[0]
+        let name = formatName(props.profile.fullName).split(' ')[0]
         return (
             <div className="page dashboard">
-                <h1>Welcome to your Dashboard, {name}!</h1>
-                <DashboardControl toggle={toggleShowGroups}/>
-                    { 
-                        showGroups ? 
-                        <div style={{width: '80%', margin: 'auto'}}>
-                            {props.groupList ?
-                                props.groupList.map((group) => (
-                                    <Group
-                                        key={group.group_id}
-                                        group={group}/>
-                                ))
-                                :
-                                <Spinner animation="border" size="lg"/>
-                            }
+                <Tab.Container id="left-tabs-example" defaultActiveKey="first">
+                    <Row
+                        style={{
+                            height: '100%',
+                            width: '95%',
+                            margin: 'auto',
+                            boxShadow: '0px 0px 5px lightgrey'
+                        }}>
+                        <Col 
+                            sm={3} 
+                            style={{
+                                height: '100%',
+                                borderRight: '1px solid lightgrey',
+                                paddingTop: '30px',
+                                paddingBottom: '30px'
+                            }}>
+                        <div className="user">
+                            <img className="large-icon" alt="" src={user}/>
+                            <h1>{name}</h1>
+                            <div className="info" >
+                                <p>
+                                    <img src={phone}/>
+                                    <span>{props.profile.phone}</span> 
+                                </p>
+                                <p>
+                                    <img src={mail}/>
+                                    <span>{props.profile.email}</span> 
+                                </p>
+                            </div>
                         </div>
-                        :
-                        <CardDeck style={{width: '80%', margin: 'auto'}}>
-                            <CardColumns>
-                                {props.meetings ? 
-                                    props.meetings.map((meeting) => (
-                                        <DetailCard
-                                            key={meeting.id}
-                                            meeting={meeting}/>
+                        <Nav variant="pills" className="flex-column">
+                            <Nav.Item>
+                                <Nav.Link eventKey="first">Groups</Nav.Link>
+                            </Nav.Item>
+                            <Nav.Item>
+                                <Nav.Link eventKey="second">Meetings</Nav.Link>
+                            </Nav.Item>
+                            <Nav.Item>
+                                <Nav.Link eventKey="third">Calendar</Nav.Link>
+                            </Nav.Item>
+                            <Nav.Item>
+                                <Nav.Link eventKey="fourth">Settings</Nav.Link>
+                            </Nav.Item>
+                        </Nav>
+                    </Col>
+                    <Col sm={9} style={{height: '100%', overflow: 'auto'}}>
+                    <Tab.Content>
+                        <Tab.Pane eventKey="first">
+                            <DashboardControl tab={'Groups'}/>
+                            <div style={{width: '95%', margin: 'auto'}}>
+                                {props.groupList ?
+                                    props.groupList.map((group) => (
+                                        <Group
+                                            key={group.group_id}
+                                            group={group}/>
                                     ))
-                                    : 
+                                    :
                                     <Spinner animation="border" size="lg"/>
                                 }
-                            </CardColumns>
-                        </CardDeck>
-                    }
+                            </div>
+                        </Tab.Pane>
+                        <Tab.Pane eventKey="second">
+                            <DashboardControl tab={'Meetings'}/>
+                            <CardDeck style={{width: '95%', margin: 'auto'}}>
+                                <CardColumns>
+                                    {props.meetings ? 
+                                        props.meetings.map((meeting) => (
+                                            <DetailCard
+                                                key={meeting.id}
+                                                meeting={meeting}/>
+                                        ))
+                                        : 
+                                        <Spinner animation="border" size="lg"/>
+                                    }
+                                </CardColumns>
+                            </CardDeck>
+                        </Tab.Pane>
+                        <Tab.Pane eventKey="third">
+                            <Calendar/>
+                        </Tab.Pane>
+                        <Tab.Pane eventKey="fourth">
+                            {'Settings'}
+                        </Tab.Pane>
+                    </Tab.Content>
+                    </Col>
+                    </Row>
+                </Tab.Container>
             </div>
         )
     }
@@ -76,8 +137,7 @@ const Dashboard = (props) => {
     
     const mapStateToProps = state => ({
         token: state.user.token,
-        fullName: state.user.profile.fullName,
-        userId: state.user.profile.id,
+        profile: state.user.profile,
         groupList: state.groups.groupList,
         meetings: state.groups.meetings
     })
@@ -86,4 +146,4 @@ const Dashboard = (props) => {
         getMyGroups : (userId, token) => dispatch(getMyGroups(userId, token))
     })
     
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(NewDashboard);
