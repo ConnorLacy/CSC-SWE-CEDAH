@@ -21,24 +21,20 @@ const MyNav = (props) => {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="mr-auto">
-                    <Nav.Link href="#features">Features</Nav.Link>
-                    <Nav.Link href="#pricing">Pricing</Nav.Link>
-                    <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-                        <NavDropdown.Item>Action</NavDropdown.Item>
-                        <NavDropdown.Item>Another action</NavDropdown.Item>
-                        <NavDropdown.Item>Something</NavDropdown.Item>
-                        <NavDropdown.Divider />
-                        <NavDropdown.Item>Separated link</NavDropdown.Item>
-                    </NavDropdown>
+                    { props.isAuthenticated ?  
+                        <NavLink style={{color: 'white'}} to="/dashboard">Dashboard</NavLink>
+                        :
+                        <></>
+                    }
                 </Nav>
                 <Nav>
                     {props.isAuthenticated ? 
                     <>
                         <Button as={NavLink} 
-                                to="/dashboard"
+                                to="/profile"
                                 variant="success"
                                 className="mynav button"
-                                style={{margin: '0px 10px'}}>Dashboard</Button>
+                                style={{margin: '0px 10px'}}>Profile</Button>
                         <Button as={NavLink} to="/logout">Logout</Button>
                     </>
                     :
