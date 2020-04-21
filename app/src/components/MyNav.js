@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {NavLink} from 'react-router-dom';
-import {Navbar, Nav, NavDropdown, Button} from 'react-bootstrap';
+import {Navbar, Nav, Button} from 'react-bootstrap';
+import group from '../assets/group.svg';
 
 
 const MyNav = (props) => {
@@ -11,30 +12,25 @@ const MyNav = (props) => {
             collapseOnSelect 
             expand="lg" 
             bg="dark" 
-            variant="dark">
+            variant="dark"
+            style={{height: 75}}>
             <Navbar.Brand as={NavLink} to="/">
-            Brand link
+                <img alt="" src={group} style={{height: '3em'}}/>
             </Navbar.Brand>
             <Navbar.Brand as={NavLink} to="/">
             {props.isAuthenticated}
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
-                <Nav className="mr-auto">
-                    { props.isAuthenticated ?  
-                        <NavLink style={{color: 'white'}} to="/dashboard">Dashboard</NavLink>
-                        :
-                        <></>
-                    }
-                </Nav>
+                <Nav className="mr-auto"/>
                 <Nav>
                     {props.isAuthenticated ? 
                     <>
                         <Button as={NavLink} 
-                                to="/profile"
+                                to="/dashboard"
                                 variant="success"
                                 className="mynav button"
-                                style={{margin: '0px 10px'}}>Profile</Button>
+                                style={{margin: '0px 10px'}}>Dashboard</Button>
                         <Button as={NavLink} to="/logout">Logout</Button>
                     </>
                     :
