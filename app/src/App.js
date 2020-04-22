@@ -4,7 +4,6 @@ import {hideModal} from './redux/actions/app';
 import MyNav from './components/MyNav';
 import MyModal from './components/MyModal';
 import Welcome from './pages/Welcome';
-import Login from './pages/Login';
 import Fetcher from './pages/Fetcher';
 import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
@@ -31,7 +30,6 @@ const App = (props) => {
             success={props.success}
             message={props.message}/>
           <Route href="" path="/" exact component={Welcome}/>
-          <Route href="" path="/login" exact component={Login}/>
           <Route href="" path="/fetcher" exact component={Fetcher}/>
           <Route href="" path="/signup" exact component={Signup}/>
           { props.isAuthenticated ?
@@ -42,7 +40,7 @@ const App = (props) => {
                 <Route href="" path="/group/join" component={JoinGroup}/>
                 <Route href="" path="/logout" exact component={Logout} />
               </>
-              : <Redirect push to="/login"/>
+              : <Redirect push to="/"/>
           }
         </div>
     </Router>
