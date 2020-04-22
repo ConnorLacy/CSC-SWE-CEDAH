@@ -1,52 +1,46 @@
-import React from 'react';
-import {Container, Row, Col} from 'react-bootstrap';
+import React, {useState} from 'react'
+import SignupForm from '../components/SignupForm';
+import {Row} from 'react-bootstrap';
+import LoginForm from '../components/LoginForm';
+import logo from '../assets/logo.png';
+import logo_dark from '../assets/logo_dark.png';
+import {NavLink} from 'react-router-dom';
 
 const Welcome = () => {
+    const [signup, toggleForm] = useState(true);
+    
     return (
-      <div className="page welcome">
-        <section className="section 1" href="#about" >
-          <h1>About things</h1>
-        </section>
-        <section className="section 2" href="#about">
-          <h1>About things</h1>
-        </section>
-        <section className="section 3" href="#">
-          <h1>About things</h1>
-        </section>
-
-        <Container fluid className="footer">
-          <Row>
-            <Col>
-              <h1>Branding</h1>
-            </Col>
-            <Col>
-              <p>Something</p>
-              <p>Something</p>
-              <p>Something</p>
-              <p>Something</p>
-              <p>Something</p>
-              <p>Something</p>
-            </Col>
-            <Col>
-              <p>Something</p>
-              <p>Something</p>
-              <p>Something</p>
-              <p>Something</p>
-              <p>Something</p>
-              <p>Something</p>
-            </Col>
-            <Col>
-              <p>Something</p>
-              <p>Something</p>
-              <p>Something</p>
-              <p>Something</p>
-              <p>Something</p>
-              <p>Something</p>
-            </Col>
-          </Row>
-        </Container>
-      </div>
-    );
+        <div className="welcome">
+            <Row>
+                <section>
+                    <img alt="" src={logo} />
+                    <h4 style={{color: 'lightgrey'}}>Making collaboration easy.</h4>    
+                </section>
+                <section>
+                    <div className="inner">
+                        <div className="blurb">
+                            <img alt="" src={logo_dark} />
+                            <p>Here's a blurb about how we make things better</p>
+                        </div>
+                        <div className="user-actions">
+                            <div className="placeholder">
+                                <h1>{signup ? 'Join the Team.' : 'Welcome Back!'}</h1>
+                                { signup ?
+                                            <SignupForm/>
+                                            :
+                                            <LoginForm/>
+                                        }
+                                <p style={{padding: 30}}>
+                                    Already have an account?
+                                    <NavLink to="" onClick={e => toggleForm(!signup)} style={{marginLeft: 10}}>Log In</NavLink>
+                                </p>    
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </Row>
+        </div>
+    )
 }
 
 export default Welcome;

@@ -1,11 +1,16 @@
 package com.meetup.meetupapi.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.meetup.meetupapi.model.GroupMembership;
+import com.meetup.meetupapi.model.Meeting;
 import com.meetup.meetupapi.model.MeetupGroup;
+import com.meetup.meetupapi.model.UserAvailability;
 import com.meetup.meetupapi.repo.GroupMembershipRepository;
+import com.meetup.meetupapi.repo.MeetingRepository;
 import com.meetup.meetupapi.repo.MeetupGroupRepository;
+import com.meetup.meetupapi.repo.UserAvailabilityRepository;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -21,32 +26,86 @@ public class MeetupGroupController {
 
     private MeetupGroupRepository meetupGroupRepository;
     private GroupMembershipRepository groupMembershipRepository;
+    private UserAvailabilityRepository userAvailabilityRepository;
+    private MeetingRepository meetingRepository;
 
     public MeetupGroupController(
             MeetupGroupRepository meetupGroupRepository, 
-            GroupMembershipRepository groupMembershipRepository){
+            GroupMembershipRepository groupMembershipRepository,
+            UserAvailabilityRepository userAvailabilityRepository,
+            MeetingRepository meetingRepository){
         this.meetupGroupRepository = meetupGroupRepository;
         this.groupMembershipRepository = groupMembershipRepository;
+        this.userAvailabilityRepository = userAvailabilityRepository;
+        this.meetingRepository = meetingRepository;
     }
 
+    @SuppressWarnings("unchecked")
     @PostMapping("/retrieve")
-    public ResponseEntity<?> getGroups(@RequestParam("id") int userId){
+    public ResponseEntity<?> getMyData(@RequestParam("id") int userId){
         JSONObject response = new JSONObject();
         JSONArray groupArr = new JSONArray();
+
         int status = 200;
         List<MeetupGroup> userGroups;
+        List<GroupMembership> members;
+        List<Meeting> meetingList;
 
         try {
             userGroups = meetupGroupRepository.findMyGroups(userId);
+            // for each group user is in, create member array of member obj
             for(MeetupGroup group : userGroups){
-                JSONObject inner = new JSONObject();
-                inner.put("group_id", group.getGroup_id());
-                inner.put("group_name", group.getGroup_name());
-                inner.put("owner_id", group.getUser().getId());
-                inner.put("owner_username", group.getUser().getUsername());
-                inner.put("owner_fullName", group.getUser().getFullName());
-                groupArr.add(inner);
+
+                // Each iteration, create a group object with an
+                // array of members
+                JSONObject groupObj = new JSONObject();
+                JSONArray membersArr = new JSONArray();
+
+                // find group ID, find members in that group
+                Long groupId = group.getGroup_id();
+                members = groupMembershipRepository.findMembers(groupId);
+
+                // for each member in the group, put into member array
+                for (GroupMembership groupMembership : members) {
+                    JSONObject memberObj = new JSONObject();
+                    memberObj.put("id", groupMembership.getUser().getId());
+                    memberObj.put("name", groupMembership.getUser().getFullName());
+                    memberObj.put("email", groupMembership.getUser().getEmail());
+                    memberObj.put("phone", groupMembership.getUser().getPhone());
+                    membersArr.add(memberObj);
+                }
+
+                // Now we have group info, members array, we must find
+                // the meetings for each group
+                JSONArray meetingArr = new JSONArray();
+                meetingList = meetingRepository.findAllByGroupId(groupId);
+                for(Meeting meeting: meetingList){
+                    JSONObject meetingObj = new JSONObject();
+                    meetingObj.put("id", meeting.getId());
+                    meetingObj.put("creator", meeting.getUser().getFullName());
+                    meetingObj.put("day", meeting.getMeeting_day());
+                    meetingObj.put("start_time", meeting.getMeeting_start_time());
+                    meetingObj.put("end_time", meeting.getMeeting_end_time());
+                    meetingArr.add(meetingObj);
+                }
+
+                //Create an owner object for clarity
+                JSONObject owner = new JSONObject();
+                owner.put("id", group.getUser().getId());
+                owner.put("username", group.getUser().getUsername());
+                owner.put("fullname", group.getUser().getFullName());
+                
+                // Now we have found all the group members of this group
+                // We place the group info, it's members, and it's meetings 
+                // into the group object and start for the next group
+                groupObj.put("id", group.getGroup_id());
+                groupObj.put("name", group.getGroup_name());
+                groupObj.put("owner", owner);
+                groupObj.put("members", membersArr);
+                groupObj.put("meetings", meetingArr);
+                groupArr.add(groupObj);
             };
+
             response.put("groups", groupArr);
         } catch (Exception e){
             System.out.println("Query failed");
@@ -57,32 +116,7 @@ public class MeetupGroupController {
         return ResponseEntity.status(status).body(response);
     }
 
-    @PostMapping("/members")
-    public ResponseEntity<?> getMembers(@RequestParam("id") int groupId){
-        JSONObject response = new JSONObject();
-        JSONArray memberArr = new JSONArray();
-        int status = 200;
-        List<GroupMembership> members;
-        try {
-            members = groupMembershipRepository.findMembers(groupId);
-            for (GroupMembership groupMembership : members) {
-                JSONObject inner = new JSONObject();
-                inner.put("id", groupMembership.getUser().getId());
-                inner.put("name", groupMembership.getUser().getFullName());
-                inner.put("email", groupMembership.getUser().getEmail());
-                inner.put("phone", groupMembership.getUser().getPhone());
-                memberArr.add(inner);
-            }
-            response.put("data", memberArr);
-
-        } catch(Exception e){
-            response.put("message", "Unable to retrieve group members");
-            status = 500;
-        }
-        System.out.println("\n" + response);
-        return ResponseEntity.status(status).body(response);
-    }
-
+    @SuppressWarnings("unchecked")
     @PostMapping("/add")
     public ResponseEntity<?> addGroup(
             @RequestParam("id") int userId,
@@ -112,6 +146,7 @@ public class MeetupGroupController {
         return ResponseEntity.status(status).body(response);
     }
 
+    @SuppressWarnings("unchecked")
     @PostMapping("/join")
     public ResponseEntity<?> joinGroup(
             @RequestParam("id") int userId,
@@ -136,7 +171,7 @@ public class MeetupGroupController {
         return ResponseEntity.status(status).body(response);
     }
 
-
+    @SuppressWarnings("unchecked")
     @PostMapping("/leave")
     public ResponseEntity<?> leaveGroup(
             @RequestParam("groupId") int groupId,
@@ -160,5 +195,49 @@ public class MeetupGroupController {
         }
 
         return ResponseEntity.status(status).body(response);
+    }
+
+    /*
+        Here is where the user availability data is located. 
+        Logic for calculating meetings should go here.
+
+        Each availability belongs to a user which one can get
+        by using getId() or any of its class methods. Parse
+        this data into meeting possibilty code for calculations. 
+        
+        Print statements for right now to help visualize
+    */
+    @SuppressWarnings("unchecked")
+    @PostMapping("/availabilities")
+    public ResponseEntity<?> getAvailabilities(
+            @RequestParam("id") Long groupId
+    ){
+        List<GroupMembership> members;
+        List<UserAvailability> availabilitiesList;
+        List<Long> userIds = new ArrayList<Long>();
+        try {
+            // For each membership, get userId
+            members = groupMembershipRepository.findMembers(groupId);
+            for(GroupMembership membership: members){
+                userIds.add(membership.getUser().getId());
+            }
+            // For each userId, get all availability
+            for(Long id: userIds){
+                availabilitiesList = userAvailabilityRepository.findAllByUserId(id);
+                for(UserAvailability availability: availabilitiesList){
+                    System.out.println(
+                            "Availability: " +
+                            availability.getUser().getFullName() + "\n" +
+                            availability.getDay() + "\n" +
+                            availability.getStart_time() + "\n" +
+                            availability.getEnd_time() + "\n"
+                    );      
+                } 
+            }
+        } catch (Exception e){
+            System.out.println("Exception: " + e);
+        }
+
+        return ResponseEntity.status(200).body("ok");
     }
 }

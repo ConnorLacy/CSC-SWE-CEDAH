@@ -15,7 +15,7 @@ public interface GroupMembershipRepository extends JpaRepository<GroupMembership
         "WHERE M.user_id = U.id AND M.group_id = ?1",
         nativeQuery = true
     )
-    List<GroupMembership> findMembers(int groupId);
+    List<GroupMembership> findMembers(Long groupId);
 
 
     @Transactional

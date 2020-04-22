@@ -2,10 +2,9 @@ import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {registerUser} from '../redux/actions/user';
 import {NavLink, Redirect} from 'react-router-dom';
-import Userform from '../components/Userform';
+import SignupForm from '../components/SignupForm';
 
 const Signup = (props) => {
-
     const [isLoading, setLoading] = useState(false);
 
     const handleSubmit = async (e, formData) => {
@@ -19,20 +18,17 @@ const Signup = (props) => {
     if(props.registrationSuccess) return <Redirect to="/login" exact push/>
     else{
         return (
-            <div className="page signup">
-                <h1 className="fathead">Sign up!</h1>
-                <div className="form">
-                    <p style={{color: 'red'}}>{props.registrationError}</p>
-                    <Userform 
-                        signup
-                        isLoading={isLoading}
-                        handleSubmit={handleSubmit}/>
-                    <p style={{padding: 30}}>
-                        Already have an account?
-                        <NavLink to="/login" style={{marginLeft: 10}}>Log in</NavLink>
-                    </p>
-                </div>
-            </div>
+            <>
+                <p style={{color: 'red'}}>{props.registrationError}</p>
+                <SignupForm 
+                    signup
+                    isLoading={isLoading}
+                    handleSubmit={handleSubmit}/>
+                <p style={{padding: 30}}>
+                    Already have an account?
+                    <NavLink to="/login" style={{marginLeft: 10}}>Log in</NavLink>
+                </p>
+            </>
         )
     }
 }

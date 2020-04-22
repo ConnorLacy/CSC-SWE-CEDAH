@@ -35,6 +35,8 @@ public class UserAvailability {
 
     @NotNull
     @OneToOne
+    @Getter
+    @Setter
     @JoinColumn(name="user_id", referencedColumnName = "id")
     private ApplicationUser user;
 }
