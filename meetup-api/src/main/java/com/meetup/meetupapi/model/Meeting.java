@@ -22,7 +22,9 @@ public class Meeting {
     @Getter
     @Setter
     private long id;
-
+    @Getter
+    @Setter
+    private double meeting_duration; //for meeting calculation
     @Getter
     @Setter
     private String meeting_day;
@@ -30,7 +32,7 @@ public class Meeting {
     @Getter
     @Setter
     private Time meeting_start_time;
-
+   
     @Getter
     @Setter
     private Time meeting_end_time;
