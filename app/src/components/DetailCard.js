@@ -11,31 +11,26 @@ const DetailCard = (props) => {
     var body;
 
     if(props.meeting){
-        title = (
-            <>  
-                <img alt="" src={user} className="icon"/>
-                <strong>{formatName(props.meeting.creator)}</strong>
-            </>
-        )
+        title = <strong>{props.meeting.day}</strong>
         body = (
             <>
                 <p>
-                    <img alt="" className="icon" src={clock}/>
-                    <span>Start Time: {props.meeting.start_time}</span>
+                    <img alt="" className="icon" src={user}/>
+                    <span><strong>Host | </strong> {formatName(props.meeting.creator)}</span>
                 </p>
                 <p>
                     <img alt="" className="icon" src={clock}/>
-                    <span>End Time: {props.meeting.end_time}</span>
+                    <span><strong>Start Time | </strong> {props.meeting.start_time}</span>
+                </p>
+                <p>
+                    <img alt="" className="icon" src={clock}/>
+                    <span><strong>End Time | </strong> {props.meeting.end_time}</span>
                 </p>
             </>
         )
     }
     else {
-        title = (
-            <>
-                <strong>{formatName(props.member.name)}</strong>
-            </>
-        )
+        title = <strong>{formatName(props.member.name)}</strong>
         body = (
             <>
                 <p>
