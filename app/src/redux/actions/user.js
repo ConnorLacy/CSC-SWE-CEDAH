@@ -1,7 +1,9 @@
+const BASE_URL = "https://semiotic-karma-248216.ue.r.appspot.com/"
+
 export const userLoginFetch = user => {
     console.log("Logging in...")
     return async dispatch => {
-        return fetch('/login' , {
+        return fetch(`${BASE_URL}/login` , {
             method: 'POST',
             cache: 'no-cache',
             headers: {
@@ -32,7 +34,7 @@ export const userLoginFetch = user => {
 export const getUserInfo = (username, token) => {
     console.log('Getting user info')
     return async dispatch => {
-        return fetch(`/users/profile?username=${username}`, {
+        return fetch(`${BASE_URL}/users/profile?username=${username}`, {
             method: 'POST',
             cache: 'no-cache',
             headers: {
@@ -61,7 +63,7 @@ export const logOut = () => {
 export const registerUser = (formData) => {
     console.log("Attempting registration");
     return dispatch => {
-        return fetch('/users/sign-up', {
+        return fetch(`${BASE_URL}/users/sign-up`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

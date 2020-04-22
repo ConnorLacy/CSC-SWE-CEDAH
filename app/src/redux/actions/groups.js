@@ -1,7 +1,11 @@
+const BASE_URL = "https://semiotic-karma-248216.ue.r.appspot.com/"
+
 export const getMyGroups = (userId, token) => {
+    console.log('base url: ', BASE_URL)
     console.log('Getting my groups')
     return async dispatch => {
-        return fetch(`/groups/retrieve?id=${userId}`, {
+        dispatch(setFetch(true))
+        return fetch(`${BASE_URL}/groups/retrieve?id=${userId}`, {
             method: 'POST',
             cache: 'no-cache',
             headers: {
@@ -14,6 +18,7 @@ export const getMyGroups = (userId, token) => {
         .then(data => {
             console.log('groups received')
             dispatch(setGroups(data.groups))
+            dispatch(setFetch(false))
         })
         .catch(err => console.log('Error: ', err))
     }
@@ -21,7 +26,7 @@ export const getMyGroups = (userId, token) => {
 
 export const addGroup = (userId, token, groupName) => {
     return dispatch => {
-        return fetch(`/groups/add?id=${userId}&name=${groupName}`, {
+        return fetch(`${BASE_URL}/groups/add?id=${userId}&name=${groupName}`, {
             method: 'POST',
             cache: 'no-cache',
             headers: {
@@ -51,7 +56,7 @@ export const addGroup = (userId, token, groupName) => {
 
 export const joinGroup = (userId, token, groupName) => {
     return dispatch => {
-        return fetch(`/groups/join?id=${userId}&name=${groupName}`, {
+        return fetch(`${BASE_URL}/groups/join?id=${userId}&name=${groupName}`, {
             method: 'POST',
             cache: 'no-cache',
             headers: {
@@ -81,7 +86,7 @@ export const joinGroup = (userId, token, groupName) => {
 
 export const leaveGroup = (groupId, userId, token) => {
     return dispatch => {
-        return fetch(`/groups/leave?groupId=${groupId}&userId=${userId}`, {
+        return fetch(`${BASE_URL}/groups/leave?groupId=${groupId}&userId=${userId}`, {
             method: 'POST',
                 cache: 'no-cache',
                 headers: {
@@ -112,6 +117,11 @@ export const leaveGroup = (groupId, userId, token) => {
 const setGroups = (groups) => ({
     type: 'FETCH_GROUPS',
     payload: groups
+})
+
+const setFetch = (value) => ({
+    type: 'SET_FETCHING',
+    payload: value
 })
 
 const showModal = (type, success, message) => ({
