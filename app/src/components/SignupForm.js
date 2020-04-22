@@ -65,7 +65,6 @@ const SignupForm = (props) => {
                                 type="text" 
                                 value={lName}
                                 onChange={e => setlName(e.target.value)}
-                                autoFocus={true}
                                 required/>
                     </Form.Group>
                 </Form.Row>
