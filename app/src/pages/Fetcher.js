@@ -8,7 +8,7 @@ const Fetcher = (props) => {
 
     useEffect(() => {
         props.getUserInfo(props.username, props.token)
-    }, )
+    }, [])
 
     if(props.profile) return <Redirect push to="/dashboard"/>
     else {
