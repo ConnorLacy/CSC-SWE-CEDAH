@@ -6,7 +6,7 @@ html::-webkit-scrollbar,
     display: none;
 }
 
-.col
+// var logoColor : #e78200
 
 /* Hide scrollbar for IE and Edge */
 body,
@@ -14,6 +14,7 @@ html,
 #root,
 .page {
     -ms-overflow-style: none;
+    font-family: 'Montserrat', serif;
 }
 
 #root {
@@ -27,9 +28,54 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-.btn-success:not(:disabled):not(.disabled).active {
-    background-color: #28a745 !important;
-    border-color: #28a745 !important;
+.welcome {
+
+    width: 100vw;
+    height: 100vh;
+    background: black;
+
+    section {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: black; 
+        height: 100vh;
+        width: 40vw;
+    }
+
+    section:nth-child(2){
+        background: white;
+        width: 60vw;
+    }
+    
+    .inner {
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+        flex-wrap: wrap;
+        background: white;
+        width: 95%;
+        
+    }
+    .blurb, .user-actions {
+        text-align: center;
+        width: 50%;
+        min-width: 500px;
+        padding: 30px;
+    }
+    .blurb {
+        border-right: 1px solid lightgrey
+    }
+    .user-actions {
+        border-right: unset;
+        h1 {
+            padding: 20px;
+        }
+    }
+    form {
+        text-align: left;
+    }
 }
 
 .page {
@@ -64,6 +110,7 @@ body {
         margin: 50px auto auto;
     } 
 }
+
 .page.loader {
     display: flex;
     flex-direction: column;
@@ -71,42 +118,6 @@ body {
     align-items: center;
     width: 100vw;
     height: 100vh;
-}
-
-.welcome {
-
-    .section {
-        height: 700px;
-        width: 90%;
-        margin: 50px auto;
-        padding: 50px;
-        border-radius: 20px;
-    }
-
-    .section:nth-child(n) {
-        background: rgb(62, 83, 202);
-    }
-
-    .section:nth-child(2n) {
-        background: rgb(243, 243, 243);
-    }
-
-    .footer {
-        background: rgb(56, 56, 56);
-        height: 400px;
-        margin-top: 100px;
-        padding: 30px;
-        color: lightgray
-    }
-
-    .footer .row {
-        padding: 0 30px;
-    }
-
-    .footer .col:not(:first-child) {
-        border-right: 1px solid black;
-        text-align: right;
-    }
 }
 
 .signup {
@@ -150,6 +161,11 @@ body {
             margin: auto;
         }
     }
+}
+
+.btn-success:not(:disabled):not(.disabled).active {
+    background-color: #28a745 !important;
+    border-color: #28a745 !important;
 }
 .nav-link {
     color: black
@@ -208,7 +224,7 @@ body {
     }
 }
 
-.form {
+.add-group {
     display: flex;
     justify-content: center;
     align-items: center;
