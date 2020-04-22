@@ -1,4 +1,5 @@
 import React from 'react';
+import CustomDropdown from './CustomDropdown';
 import {Button, Col, Container, Row} from 'react-bootstrap';
 
 const DashboardControl = (props) => {
@@ -12,11 +13,16 @@ const DashboardControl = (props) => {
         case 'groups':
             buttons = (
                 <>
-                    <Button 
-                        variant="light">Create Group</Button>    
-                    <Button 
-                        onClick={props.showModal}
-                        variant="light">Join Group</Button>
+                    <CustomDropdown 
+                        title={'Create Group'} 
+                        message={'Enter the group you wish to Create'}
+                        placeholder={'Group Name'}
+                        create/>    
+                    <CustomDropdown 
+                        title={'Join Group'} 
+                        message={'Enter the group you wish to Join'}
+                        placeholder={'Group Name'}
+                        join/>    
                 </> 
             )
             break;
