@@ -33,7 +33,7 @@ const DashboardControl = (props) => {
     return (
             <Container fluid>
                 <Col>
-                    <Row style={{height: '80px',padding: '15px'}} fluid>
+                    <Row style={{height: '80px',padding: '15px'}}>
                         <Col>
                             <h1 style={{textAlign: 'left', margin: 'unset'}}>{props.tab}</h1>
                         </Col>
