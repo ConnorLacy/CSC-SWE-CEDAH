@@ -31,6 +31,7 @@ body {
 // ------------------------------------------------------------
 
 $logoBlue: #1761a0;
+$headerHeight: 75px;
 
 .welcome {
 
@@ -152,6 +153,15 @@ $logoBlue: #1761a0;
     height: 100vh;
 }
 
+.btn-primary { 
+    background-color: $logoBlue !important;
+    border-color: $logoBlue !important;
+}
+
+.nav-link.active {
+    background-color: $logoBlue !important;
+}
+
 .signup {
     .btn {
         display: block;
@@ -160,12 +170,9 @@ $logoBlue: #1761a0;
 }
 
 .dashboard {
-    display: flex;
-    .row, .col {
-        height: 90% !important;
-        min-height: 90% !important;
+    .row {
+        height: calc(100vh - 75px);
     }
-
     h1 {
         margin: 50px auto;
         padding: unset;

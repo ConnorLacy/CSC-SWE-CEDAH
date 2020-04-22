@@ -5,7 +5,7 @@ import {getMyGroups} from '../redux/actions/groups';
 import DetailCard from '../components/DetailCard';
 import Group from '../components/Group';
 import Calendar from '../components/Calendar';
-import {CardDeck, CardColumns, Spinner, Tab, Row, Col, Nav} from 'react-bootstrap';
+import {Container, CardDeck, CardColumns, Spinner, Tab, Row, Col, Nav} from 'react-bootstrap';
 import DashboardControl from '../components/DashboardControl';
 
 import user from '../assets/user.svg';
@@ -42,15 +42,9 @@ const NewDashboard = (props) => {
         return (
             <div className="page dashboard">
                 <Tab.Container id="left-tabs-example" defaultActiveKey="first">
-                    <Row
-                        style={{
-                            height: '100%',
-                            width: '95%',
-                            margin: 'auto',
-                            boxShadow: '0px 0px 5px lightgrey'
-                        }}>
+                    <Container fluid>
+                    <Row className="myRow">
                         <Col 
-                            sm={3} 
                             style={{
                                 height: '100%',
                                 borderRight: '1px solid lightgrey',
@@ -127,6 +121,7 @@ const NewDashboard = (props) => {
                     </Tab.Content>
                     </Col>
                     </Row>
+                    </Container>
                 </Tab.Container>
             </div>
         )
