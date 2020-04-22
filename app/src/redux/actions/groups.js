@@ -1,4 +1,5 @@
 export const getMyGroups = (userId, token) => {
+    console.log('Getting my groups')
     return async dispatch => {
         return fetch(`/groups/retrieve?id=${userId}`, {
             method: 'POST',
@@ -13,32 +14,6 @@ export const getMyGroups = (userId, token) => {
         .then(data => {
             console.log('groups received')
             dispatch(setGroups(data.groups))
-        })
-        .catch(err => console.log('Error: ', err))
-    }
-}
-
-export const getDetails = (groupId, token) => {
-    return async dispatch => {
-        return fetch(`/groups/details?id=${groupId}`, {
-            method: 'POST',
-            cache: 'no-cache',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        })
-        .then(response => 
-            response.json()
-        )
-        .then(data => {
-            if(data.data){
-                console.log('Members: ', data.data)
-                dispatch(setGroupDetails(data.data))
-            }else{
-                console.log("Oops!\n", data.message)
-            }
         })
         .catch(err => console.log('Error: ', err))
     }
@@ -137,14 +112,6 @@ export const leaveGroup = (groupId, userId, token) => {
 const setGroups = (groups) => ({
     type: 'FETCH_GROUPS',
     payload: groups
-})
-
-const setGroupDetails = details => ({
-    type: 'FETCH_DETAILS',
-    payload: {
-        members: details['members'],
-        meetings: details['meetings']
-    }
 })
 
 const showModal = (type, success, message) => ({
