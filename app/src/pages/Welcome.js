@@ -23,16 +23,18 @@ const Welcome = () => {
                             <p>Here's a blurb about how we make things better</p>
                         </div>
                         <div className="user-actions">
-                            <h1>{signup ? 'Join the Team.' : 'Welcome Back!'}</h1>
-                            { signup ?
-                                        <SignupForm/>
-                                        :
-                                        <LoginForm/>
-                                    }
-                            <p style={{padding: 30}}>
-                                Already have an account?
-                                <NavLink to="" onClick={e => toggleForm(!signup)} style={{marginLeft: 10}}>Log In</NavLink>
-                            </p>
+                            <div className="placeholder">
+                                <h1>{signup ? 'Join the Team.' : 'Welcome Back!'}</h1>
+                                { signup ?
+                                            <SignupForm/>
+                                            :
+                                            <LoginForm/>
+                                        }
+                                <p style={{padding: 30}}>
+                                    Already have an account?
+                                    <NavLink to="" onClick={e => toggleForm(!signup)} style={{marginLeft: 10}}>Log In</NavLink>
+                                </p>    
+                            </div>
                         </div>
                     </div>
                 </section>
