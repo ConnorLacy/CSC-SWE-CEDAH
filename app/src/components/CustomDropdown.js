@@ -1,8 +1,12 @@
-import React from 'react'
+import React, {useState} from 'react'
+import {connect} from 'react-redux';
+import {addGroup, joinGroup} from '../redux/actions/groups';
 import { DropdownButton, FormControl, InputGroup, Button} from 'react-bootstrap'
 
-
 const CustomDropdown = (props) => {
+
+    const [value, setValue] = useState('')
+
     return (
         <DropdownButton
             alignRight
@@ -14,13 +18,30 @@ const CustomDropdown = (props) => {
                 <FormControl
                 placeholder={props.placeholder}
                 aria-label={props.placeholder}
+                value={value}
+                onChange={setValue}
                 />
                 <InputGroup.Append>
-                    <Button variant="primary">{
-                    props.join ? 'Join' : 'Add'}</Button>
+                {props.join ? 
+                    <Button key={1} variant="primary" onClick={() => props.joinGroup(props.userId, props.token, value)}>Join</Button>
+                :
+                    <Button key={2} variant="primary" onClick={() => props.addGroup(props.userId, props.token, value)}>Add</Button>
+                }
+                    
                 </InputGroup.Append>
             </InputGroup>
         </DropdownButton>
     )
 }
-export default CustomDropdown;
+
+const mapStateToProps = state => ({
+    userId: state.user.profile.id,
+    token: state.user.token
+})
+
+const mapDispatchToProps = dispatch => ({
+    addGroup: (userId, token, value) => dispatch(addGroup(userId, token, value)),
+    joinGroup: (userId, token, value) => dispatch(joinGroup(userId, token, value))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(CustomDropdown);
