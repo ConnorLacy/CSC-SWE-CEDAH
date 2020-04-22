@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.meetup.meetupapi.model.GroupMembership;
+import com.meetup.meetupapi.model.MeetingPossibility;
 import com.meetup.meetupapi.model.Meeting;
 import com.meetup.meetupapi.model.MeetupGroup;
 import com.meetup.meetupapi.model.UserAvailability;
@@ -11,6 +12,8 @@ import com.meetup.meetupapi.repo.GroupMembershipRepository;
 import com.meetup.meetupapi.repo.MeetingRepository;
 import com.meetup.meetupapi.repo.MeetupGroupRepository;
 import com.meetup.meetupapi.repo.UserAvailabilityRepository;
+import com.meetup.meetupapi.services.ScheduleEngine;
+import com.meetup.meetupapi.services.fulldailyschedule;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -28,7 +31,6 @@ public class MeetupGroupController {
     private GroupMembershipRepository groupMembershipRepository;
     private UserAvailabilityRepository userAvailabilityRepository;
     private MeetingRepository meetingRepository;
-
     public MeetupGroupController(
             MeetupGroupRepository meetupGroupRepository, 
             GroupMembershipRepository groupMembershipRepository,
@@ -215,16 +217,43 @@ public class MeetupGroupController {
         List<GroupMembership> members;
         List<UserAvailability> availabilitiesList;
         List<Long> userIds = new ArrayList<Long>();
+        ArrayList<MeetingPossibility> allmeetingpossibilities = new ArrayList<MeetingPossibility>(); //will contain all meeting possibilities
         try {
             // For each membership, get userId
             members = groupMembershipRepository.findMembers(groupId);
+            //for each day in week, creates a scheduleEngine instance
+            ScheduleEngine SundayEngine = new ScheduleEngine("Sunday");
+            ScheduleEngine MondayEngine = new ScheduleEngine("Monday");
+            ScheduleEngine TuesdayEngine = new ScheduleEngine("Tuesday");
+            ScheduleEngine WednesdayEngine = new ScheduleEngine("Wednesday");
+            ScheduleEngine ThursdayEngine = new ScheduleEngine("Thursday");
+            ScheduleEngine FridayEngine = new ScheduleEngine("Friday");
+            ScheduleEngine SaturdayEngine = new ScheduleEngine("Saturday");
             for(GroupMembership membership: members){
                 userIds.add(membership.getUser().getId());
             }
             // For each userId, get all availability
             for(Long id: userIds){
-                availabilitiesList = userAvailabilityRepository.findAllByUserId(id);
+            	//Makes a full daily schedule for each day for every user, then adds the schedule to the appropriate engine
+            	availabilitiesList = userAvailabilityRepository.findAllByUserId(id);
+            	fulldailyschedule sundayschedule = new fulldailyschedule("Sunday", id, availabilitiesList);
+            	SundayEngine.addSchedule(sundayschedule);
+            	fulldailyschedule mondayschedule = new fulldailyschedule("Monday", id, availabilitiesList);
+            	MondayEngine.addSchedule(mondayschedule);
+            	fulldailyschedule tuesdayschedule = new fulldailyschedule("Tuesday", id, availabilitiesList);
+            	TuesdayEngine.addSchedule(tuesdayschedule);
+            	fulldailyschedule wednesdayschedule = new fulldailyschedule("Wednesday", id, availabilitiesList);
+            	WednesdayEngine.addSchedule(wednesdayschedule);
+            	fulldailyschedule thursdayschedule = new fulldailyschedule("Thursday", id, availabilitiesList);
+            	ThursdayEngine.addSchedule(thursdayschedule);
+            	fulldailyschedule fridayschedule = new fulldailyschedule("Friday", id, availabilitiesList);
+            	FridayEngine.addSchedule(fridayschedule);
+            	fulldailyschedule saturdayschedule = new fulldailyschedule("Saturday", id, availabilitiesList);
+            	SaturdayEngine.addSchedule(saturdayschedule);
+            	
+            	
                 for(UserAvailability availability: availabilitiesList){
+                	
                     System.out.println(
                             "Availability: " +
                             availability.getUser().getFullName() + "\n" +
@@ -232,8 +261,11 @@ public class MeetupGroupController {
                             availability.getStart_time() + "\n" +
                             availability.getEnd_time() + "\n"
                     );      
-                } 
+                }
+                
+                
             }
+            allmeetingpossibilities.addAll(SundayEngine.calculatemeeting(1)); //1 is a placeholder duration of 1 hour
         } catch (Exception e){
             System.out.println("Exception: " + e);
         }
