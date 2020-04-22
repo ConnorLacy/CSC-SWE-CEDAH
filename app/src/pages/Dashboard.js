@@ -12,14 +12,14 @@ import user from '../assets/user.svg';
 import phone from '../assets/phone.svg';
 import mail from '../assets/mail.svg';
 
-const NewDashboard = (props) => {
+const Dashboard = (props) => {
 
     const [loading, setLoading] = useState(true)
     const [meetingList, setMeetingList] = useState()
 
     useEffect(() => {
         getData();
-    }, [loading])
+    }, [loading, props.meetingList])
 
     const getData = async () => {
         setLoading(true)
@@ -151,4 +151,4 @@ const mapDispatchToProps = dispatch => ({
     getMyGroups : (userId, token) => dispatch(getMyGroups(userId, token))
 })
     
-export default connect(mapStateToProps, mapDispatchToProps)(NewDashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
