@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {registerUser} from '../redux/actions/user';
 import {NavLink, Redirect} from 'react-router-dom';
-import signup_form from '../components/SignupForm';
+import SignupForm from '../components/SignupForm';
 
 const Signup = (props) => {
     const [isLoading, setLoading] = useState(false);
@@ -20,7 +20,7 @@ const Signup = (props) => {
         return (
             <>
                 <p style={{color: 'red'}}>{props.registrationError}</p>
-                <signup_form 
+                <SignupForm 
                     signup
                     isLoading={isLoading}
                     handleSubmit={handleSubmit}/>
