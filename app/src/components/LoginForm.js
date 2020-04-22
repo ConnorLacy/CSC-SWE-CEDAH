@@ -27,6 +27,7 @@ const LoginForm = (props) => {
             <Form 
                 style={{
                     width: '30%',
+                    margin: 'auto',
                     maxWidth: 500,
                     minWidth: 250
                 }}
