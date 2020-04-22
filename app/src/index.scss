@@ -153,11 +153,6 @@ $headerHeight: 75px;
     height: 100vh;
 }
 
-.btn-primary { 
-    background-color: $logoBlue !important;
-    border-color: $logoBlue !important;
-}
-
 .nav-link.active {
     background-color: $logoBlue !important;
 }
@@ -175,15 +170,15 @@ $headerHeight: 75px;
     }
     .col {
         justify-content: flex-end !important;
-        a.btn.btn-light:first-child {
+        .btn.btn-light:first-child {
             margin-right: 10px;
         }
-        a.btn.btn-light{
+        .btn.btn-light{
             background: $logoBlue;
             border-color: $logoBlue;
             color: white;
         }
-        a.btn.btn-light:hover{
+        .btn.btn-light:hover{
             background: white;
             color: $logoBlue;
         }
@@ -217,10 +212,6 @@ $headerHeight: 75px;
     }
 }
 
-.btn-success:not(:disabled):not(.disabled).active {
-    background-color: #28a745 !important;
-    border-color: #28a745 !important;
-}
 .nav-link {
     color: black
 }
