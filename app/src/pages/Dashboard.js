@@ -65,7 +65,7 @@ const Dashboard = (props) => {
                                 </p>
                             </div>
                         </div>
-                        <Nav variant="pills" className="flex-column">
+                        <Nav justify variant="pills" className="flex-column">
                             <Nav.Item>
                                 <Nav.Link eventKey="first">Groups</Nav.Link>
                             </Nav.Item>
@@ -113,10 +113,11 @@ const Dashboard = (props) => {
                             </CardDeck>
                         </Tab.Pane>
                         <Tab.Pane eventKey="third">
+                            <DashboardControl tab={'Calendar'}/>
                             <Calendar/>
                         </Tab.Pane>
                         <Tab.Pane eventKey="fourth">
-                            {'Settings'}
+                            <DashboardControl tab={'Settings'}/>
                         </Tab.Pane>
                     </Tab.Content>
                     </Col>

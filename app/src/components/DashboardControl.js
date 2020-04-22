@@ -3,6 +3,33 @@ import {Button, Col, Container, Row} from 'react-bootstrap';
 
 const DashboardControl = (props) => {
     let type = props.tab.trim().toLowerCase()
+    console.log(type)
+    var buttons;
+    switch(type){
+        case 'calendar' || 'settings': 
+            buttons = <></>
+            break;
+        case 'groups':
+            buttons = (
+                <>
+                    <Button 
+                        variant="light">Create Group</Button>    
+                    <Button 
+                        onClick={props.showModal}
+                        variant="light">Join Group</Button>
+                </> 
+            )
+            break;
+        case 'meetings':
+            buttons = (
+                <Button 
+                    onClick={props.showModal}
+                    variant="light">Create Meeting</Button>
+            )
+            break;
+        default: break;
+    }
+
     return (
             <Container fluid>
                 <Col>
@@ -11,19 +38,7 @@ const DashboardControl = (props) => {
                             <h1 style={{textAlign: 'left', margin: 'unset'}}>{props.tab}</h1>
                         </Col>
                         <Col style={{display: 'flex', alignItems: 'center'}}>
-                            {(type === 'groups') ?
-                                <>
-                                    <Button 
-                                        variant="light">Create Group</Button>    
-                                    <Button 
-                                        onClick={props.showModal}
-                                        variant="light">Join Group</Button>
-                                </>
-                            :
-                                <Button 
-                                    onClick={props.showModal}
-                                    variant="light">Create Meeting</Button>    
-                            }
+                            {buttons}
                         </Col>
                     </Row>
                 </Col>
