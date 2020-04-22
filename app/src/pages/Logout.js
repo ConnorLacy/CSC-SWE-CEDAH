@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {logOut} from '../redux/actions/user';
 import {Redirect} from 'react-router-dom';
+import {MySpinner} from '../components/MySpinner';
 import {Spinner} from 'react-bootstrap';
 
 const Logout = (props) => {
@@ -20,7 +21,7 @@ const Logout = (props) => {
                     <div className="goodbye">
                         <h1>Come back soon!</h1>
                         <p>Logging you out.</p>
-                        <Spinner animation="border" size="lg"/>
+                        <MySpinner/>
                     </div>
                 </div>
             </>
