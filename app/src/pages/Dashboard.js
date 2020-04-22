@@ -15,6 +15,7 @@ import mail from '../assets/mail.svg';
 const NewDashboard = (props) => {
 
     const [loading, setLoading] = useState(true)
+    const [meetingList, setMeetingList] = useState()
 
     useEffect(() => {
         getData();
@@ -23,11 +24,21 @@ const NewDashboard = (props) => {
     const getData = async () => {
         setLoading(true)
         props.getMyGroups(1, props.token)
+        let meetingList = props.groups.map((group) => {
+            if(group.meetings.length > 0)
+            return group.meetings
+        }).filter(meetingList => {
+            return meetingList !== undefined
+        }).flat()
+        console.log('meetingList getData', meetingList)
+        setMeetingList(meetingList)
         setLoading(false)
     }
 
     if(!loading){
         let name = formatName(props.profile.fullName).split(' ')[0]
+        console.log('meetingList ', meetingList)
+
         return (
             <div className="page dashboard">
                 <Tab.Container id="left-tabs-example" defaultActiveKey="first">
@@ -80,10 +91,10 @@ const NewDashboard = (props) => {
                         <Tab.Pane eventKey="first">
                             <DashboardControl tab={'Groups'}/>
                             <div style={{width: '95%', margin: 'auto'}}>
-                                {props.groupList ?
-                                    props.groupList.map((group) => (
+                                {props.groups ?
+                                    props.groups.map((group) => (
                                         <Group
-                                            key={group.group_id}
+                                            key={group.id}
                                             group={group}/>
                                     ))
                                     :
@@ -95,8 +106,8 @@ const NewDashboard = (props) => {
                             <DashboardControl tab={'Meetings'}/>
                             <CardDeck style={{width: '95%', margin: 'auto'}}>
                                 <CardColumns>
-                                    {props.meetings ? 
-                                        props.meetings.map((meeting) => (
+                                    {meetingList ? 
+                                        meetingList.map(meeting => (
                                             <DetailCard
                                                 key={meeting.id}
                                                 meeting={meeting}/>
@@ -135,15 +146,14 @@ const NewDashboard = (props) => {
         }
     }
     
-    const mapStateToProps = state => ({
-        token: state.user.token,
-        profile: state.user.profile,
-        groupList: state.groups.groupList,
-        meetings: state.groups.meetings
-    })
-    
-    const mapDispatchToProps = dispatch => ({
-        getMyGroups : (userId, token) => dispatch(getMyGroups(userId, token))
-    })
+const mapStateToProps = state => ({
+    token: state.user.token,
+    profile: state.user.profile,
+    groups: state.groups.groups,
+})
+
+const mapDispatchToProps = dispatch => ({
+    getMyGroups : (userId, token) => dispatch(getMyGroups(userId, token))
+})
     
 export default connect(mapStateToProps, mapDispatchToProps)(NewDashboard);

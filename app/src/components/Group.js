@@ -12,8 +12,8 @@ const Group = (props) => {
                     <img alt="" src={group} style={{height: '3em'}}/>
                 </div>
                 <span style={{padding: '15px'}}>
-                    <strong>{props.group.group_name}</strong><br/>
-                    <strong>Owner</strong> {formatName(props.group.owner_fullName)}
+                    <strong>{props.group.name}</strong><br/>
+                    <strong>Owner</strong> {formatName(props.group.owner.fullname)}
                 </span>
                 </Card.Header>
             <Card.Body>
@@ -22,7 +22,7 @@ const Group = (props) => {
                 </Card.Text>
                 <Button 
                     as={NavLink}
-                    to={`/group/view/${props.group.group_name}/${props.group.group_id}`}
+                    to={`/group/view/${props.group.name}/${props.group.id}`}
                     variant="primary" 
                     >
                         Open Group

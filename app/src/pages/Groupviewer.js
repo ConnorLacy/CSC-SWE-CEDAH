@@ -1,27 +1,29 @@
+import React, { useState,useEffect } from 'react';
+import { connect } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import back from '../assets/back.svg';
 import Calendar from '../components/Calendar';
 import LeaveGroup from '../components/LeaveGroup';
 import DetailCard from '../components/DetailCard';
-import {getDetails} from '../redux/actions/groups';
-
-import React, { useState,useEffect } from 'react';
-import { connect } from 'react-redux';
-import { useParams } from 'react-router-dom';
 import {Col, Nav, Row, Tab, Tabs, Spinner} from 'react-bootstrap';
 
 const Groupviewer = (props) => {
     const [loading, setLoading] = useState(true)
+    const [group, setGroup] = useState([])
 
-    let groupName = useParams().name
-    let groupId = useParams().id
+    var groupName = useParams().name
+    var groupId = useParams().id
 
     useEffect(() => {
         getData();
     }, [loading])
-
+    
     const getData = async () => {
         setLoading(true)
-        props.getDetails(groupId, props.token)
+        let foundGroup = props.groups.filter(group => {
+            return group.id == groupId
+        })
+        setGroup(foundGroup[0])
         setLoading(false)
     }
     
@@ -31,6 +33,7 @@ const Groupviewer = (props) => {
         )
     }
     else {
+        console.log('group', group)
         return (
             <div className="page group-viewer">
                 <div className="header back-button">
@@ -38,7 +41,7 @@ const Groupviewer = (props) => {
                             alt=""
                             onClick={props.history.goBack}
                             src={back}/>
-                        <h1>{groupName}</h1>
+                        <h1>{group.name}</h1>
                 </div>
                 <Tab.Container defaultActiveKey="first" >
                     <Row
@@ -82,8 +85,8 @@ const Groupviewer = (props) => {
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="second">
                                     <h1>Members</h1>
-                                    {props.members ?
-                                        props.members.map((member, index) => (
+                                    {group.members ?
+                                        group.members.map((member, index) => (
                                             <DetailCard
                                                 key={index}
                                                 member={member}/>
@@ -95,9 +98,9 @@ const Groupviewer = (props) => {
                                 <h1>Meetings</h1>
                                 <Tabs defaultActiveKey="list" id="uncontrolled-tab-example">
                                     <Tab eventKey="list" title="List">
-                                        {props.meetings ?
-                                            (props.meetings.length > 0) ? 
-                                                props.meetings.map((meeting, index) => (
+                                        {group.meetings ?
+                                            (group.meetings.length > 0) ? 
+                                                group.meetings.map((meeting, index) => (
                                                     <DetailCard
                                                         key={index}
                                                         meeting={meeting}/>
@@ -126,14 +129,8 @@ const Groupviewer = (props) => {
     }
 }
 
-const mapStateToProps = state => ({
-    members: state.groups.members,
-    meetings: state.groups.meetings,
-    token: state.user.token
+const mapStateToProps = (state) => ({
+    groups: state.groups.groups
 })
 
-const mapDispatchToProps = dispatch => ({
-    getDetails: (groupId, token) => dispatch(getDetails(groupId, token))
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(Groupviewer);
+export default connect(mapStateToProps, null)(Groupviewer);
