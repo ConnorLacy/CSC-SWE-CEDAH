@@ -21,21 +21,23 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
-import static com.meetup.meetupapi.security.SecurityConstants.EXPIRATION_TIME;
-import static com.meetup.meetupapi.security.SecurityConstants.SECRET;
+// import static com.meetup.meetupapi.security.SecurityConstants.EXPIRATION_TIME;
+// import static com.meetup.meetupapi.security.SecurityConstants.SECRET;
+import static com.meetup.meetupapi.security.SecurityConstants.*;
+
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
-    public JWTAuthenticationFilter(AuthenticationManager authenticationManager){
+    public JWTAuthenticationFilter(final AuthenticationManager authenticationManager){
         this.authenticationManager = authenticationManager;
     }
 
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest req,
-                                                HttpServletResponse res) throws AuthenticationException {
+    public Authentication attemptAuthentication(final HttpServletRequest req,
+                                                final HttpServletResponse res) throws AuthenticationException {
         try {
-            ApplicationUser creds = new ObjectMapper()
+            final ApplicationUser creds = new ObjectMapper()
                     .readValue(req.getInputStream(), ApplicationUser.class);
 
             return authenticationManager.authenticate(
@@ -44,51 +46,51 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                             creds.getPassword(),
                             new ArrayList<>())
             );
-        } catch (IOException e) {
-            System.out.println("\n\n\n\n\n Exception here");
+        } catch (final IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
     protected void successfulAuthentication(
-            HttpServletRequest req,
-            HttpServletResponse res,
-            FilterChain chain,
-            Authentication auth
+            final HttpServletRequest req,
+            final HttpServletResponse res,
+            final FilterChain chain,
+            final Authentication auth
             ) throws IOException, ServletException 
     {
-        String username = ((User) auth.getPrincipal()).getUsername();
-        String token = JWT.create()
+        final String username = ((User) auth.getPrincipal()).getUsername();
+        final String token = JWT.create()
                 .withSubject(username)
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .sign(HMAC512(SECRET.getBytes()));
 
-        JSONObject data = new JSONObject();
+        final JSONObject data = new JSONObject();
         data.put("user", username);
         data.put("jwt", token);
-        String json = new ObjectMapper().writeValueAsString(data);
+        // data.toJSONString();
+        // final String json = new ObjectMapper().writeValueAsString(data);
         // res.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
         res.setContentType("application/json");
         res.setCharacterEncoding("UTF-8");
-        res.getWriter().write(json);
+        res.getWriter().write(data.toJSONString());
         res.getWriter().flush();
         res.getWriter().close();
     }
 
     @Override
     protected void unsuccessfulAuthentication(
-            HttpServletRequest req, 
-            HttpServletResponse res, 
-            AuthenticationException e) throws IOException, ServletException
+            final HttpServletRequest req, 
+            final HttpServletResponse res, 
+            final AuthenticationException e) throws IOException, ServletException
     {
         // System.out.println("\n\n\n\n=======\nInvalid Credentials=========\n\n\n\n");
-        JSONObject data = new JSONObject();
+        final JSONObject data = new JSONObject();
         data.put("message", "Invalid Credentials");
-        String json = new ObjectMapper().writeValueAsString(data);
+        // final String json = new ObjectMapper().writeValueAsString(data);
         res.setContentType("application/json");
         res.setCharacterEncoding("UTF-8");
-        res.getWriter().write(json);
+        res.getWriter().write(data.toJSONString());
         res.getWriter().flush();
         res.getWriter().close();
     }
