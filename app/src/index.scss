@@ -173,6 +173,21 @@ $headerHeight: 75px;
     .row {
         height: calc(100vh - 75px);
     }
+    .col {
+        justify-content: flex-end !important;
+        a.btn.btn-light:first-child {
+            margin-right: 10px;
+        }
+        a.btn.btn-light{
+            background: $logoBlue;
+            border-color: $logoBlue;
+            color: white;
+        }
+        a.btn.btn-light:hover{
+            background: white;
+            color: $logoBlue;
+        }
+    }
     h1 {
         margin: 50px auto;
         padding: unset;
@@ -282,6 +297,15 @@ $headerHeight: 75px;
 .tab-content {
     padding-top: 30px;
     padding-bottom: 30px;
+}
+
+.tab-content:after {
+    position: absolute;
+    border-bottom: 1px solid lightgrey;
+    content: '';
+    display: block;
+    width: 70%;
+    left: 4%;
 }
 
 th, td {
