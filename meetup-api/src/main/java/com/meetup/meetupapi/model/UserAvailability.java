@@ -39,4 +39,11 @@ public class UserAvailability {
     @Setter
     @JoinColumn(name="user_id", referencedColumnName = "id")
     private ApplicationUser user;
+
+    public UserAvailability(String day, Time start_time, Time end_time, ApplicationUser user){
+        this.day = day;
+        this.start_time = start_time;
+        this.end_time = end_time;
+        this.user = user;
+    }
 }
