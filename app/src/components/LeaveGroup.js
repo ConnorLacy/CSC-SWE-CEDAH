@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Button, Form, Spinner } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import {leaveGroup} from '../redux/actions/groups';
@@ -10,18 +10,19 @@ const LeaveGroup = (props) => {
     const [loading, setLoading] = useState(false)
     const [redirect, setRedirect] = useState(false)
 
+    useEffect(() => {
+        if(props.showModal === true){
+            setRedirect(true)
+        }
+    }, [props.showModal])
+
     const handleSubmit = (e) => {
         e.preventDefault()
         if(name.localeCompare(props.groupName) === 0){
-            //leave group
             setLoading(true)
             console.log('leaving group')
             console.log(`leaving ${props.groupName} as user ${props.userId} with token ${props.token}`)
             props.leaveGroup(props.groupId, props.userId, props.token)
-            setTimeout(() => {
-                setRedirect(true)
-                setLoading(false)
-            }, 3000);
         }
         else{
             setErr('Name must match exactly to confirm your leave.')
@@ -82,7 +83,8 @@ const LeaveGroup = (props) => {
 
 const mapStateToProps = state => ({
     userId : state.user.profile.id,
-    token: state.user.token
+    token: state.user.token,
+    showModal: state.app.showModal
 })
 
 const mapDispatchToProps = dispatch => ({
