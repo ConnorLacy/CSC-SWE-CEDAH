@@ -22,9 +22,7 @@ public class Meeting {
     @Getter
     @Setter
     private long id;
-    @Getter
-    @Setter
-    private double meeting_duration; //for meeting calculation
+   
     @Getter
     @Setter
     private String meeting_day;
@@ -36,6 +34,10 @@ public class Meeting {
     @Getter
     @Setter
     private Time meeting_end_time;
+
+    @Getter
+    @Setter
+    private double meeting_duration; //for meeting calculation
 
     @NotNull
     @ManyToOne
@@ -50,4 +52,18 @@ public class Meeting {
     @Setter
     @JoinColumn(name="creator_id", referencedColumnName = "id")
     private ApplicationUser user;
+
+
+    public Meeting(){}
+    public Meeting(
+            String meeting_day, Time meeting_start_time, Time meeting_end_time, 
+            double meeting_duration, ApplicationUser user, MeetupGroup group){
+        
+        this.meeting_duration = meeting_duration;
+        this.meeting_day= meeting_day;
+        this.meeting_start_time = meeting_start_time;
+        this.meeting_end_time = meeting_end_time;
+        this.user = user;
+        this.group = group;
+    }
 }
