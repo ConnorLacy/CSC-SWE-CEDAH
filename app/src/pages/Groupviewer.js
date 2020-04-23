@@ -106,6 +106,9 @@ const Groupviewer = (props) => {
                                 <Tab eventKey="list" title="List">
                                     {meetingCards}
                                 </Tab>
+                                <Tab eventKey="meetingPossibilities" title="Meeting Possibilities">
+                                    {/* <MeetingPossibilities/> */}
+                                </Tab>
                                 <Tab eventKey="calendar" title="Calendar">
                                     <Calendar/>
                                 </Tab>
