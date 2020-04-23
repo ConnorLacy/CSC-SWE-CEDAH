@@ -4,7 +4,7 @@ import back from '../assets/back.svg';
 import Calendar from '../components/Calendar';
 import LeaveGroup from '../components/LeaveGroup';
 import DetailCard from '../components/DetailCard';
-import {Col, Nav, Row, Tab, Tabs, Spinner} from 'react-bootstrap';
+import {Col, Nav, Row, Tab, Tabs} from 'react-bootstrap';
 
 const Groupviewer = (props) => {
 

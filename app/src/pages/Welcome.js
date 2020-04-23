@@ -3,9 +3,7 @@ import {connect} from 'react-redux';
 import SignupForm from '../components/SignupForm';
 import {Row} from 'react-bootstrap';
 import LoginForm from '../components/LoginForm';
-import logo from '../assets/logo.png';
 import logo_blue_white from '../assets/logo_blue_white.png';
-import logo_dark from '../assets/logo_dark.png';
 import logo_blue_grey from '../assets/logo_blue_grey.png';
 import {NavLink, Redirect} from 'react-router-dom';
 

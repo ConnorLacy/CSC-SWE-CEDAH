@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {formatName} from '../helper';
 import {getMyGroups} from '../redux/actions/groups';
 import DetailCard from '../components/DetailCard';
 import Group from '../components/Group';
 import Calendar from '../components/Calendar';
-import {Container, CardDeck, CardColumns, Spinner, Tab, Row, Col, Nav} from 'react-bootstrap';
+import {Container, CardDeck, CardColumns, Tab, Row, Col, Nav} from 'react-bootstrap';
 import DashboardControl from '../components/DashboardControl';
 
 import user from '../assets/user.svg';
@@ -23,7 +23,7 @@ const Dashboard = (props) => {
     
     if(profile) {name = formatName(props.profile.fullName).split(' ')[0]}
     if(groups){
-        if (groups.length == 0) {
+        if (groups.length === 0) {
             groupCards = <p>Womp. You're not in any groups yet!</p>
         }
         else{
@@ -36,7 +36,7 @@ const Dashboard = (props) => {
         }
     }
     if(meetings){
-        if(meetings.length == 0){
+        if(meetings.length === 0){
             meetingCards = <p>You have no meetings at this time</p>
         }
         else {

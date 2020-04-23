@@ -1,6 +1,6 @@
 import React from 'react';
 import CustomDropdown from './CustomDropdown';
-import {Button, Col, Container, Row} from 'react-bootstrap';
+import {Col, Container, Row} from 'react-bootstrap';
 
 const DashboardControl = (props) => {
     let type = props.tab.trim().toLowerCase()
