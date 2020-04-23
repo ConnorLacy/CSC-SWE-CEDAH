@@ -55,7 +55,7 @@ const Dashboard = (props) => {
     
     useEffect(() => {
         props.getMyGroups(props.profile.id, props.token)
-    }, [props.groups.members, props.groups])
+    }, [props.groups.members, props.numberOfGroups, props.showModal])
 
     return (
         <div className="page dashboard">
@@ -132,6 +132,7 @@ const mapStateToProps = state => ({
     token: state.user.token,
     profile: state.user.profile,
     groups: state.groups.groups,
+    showModal: state.app.showModal,
     meetings: state.groups.groups.map(({meetings}) => meetings).flat()
 })
 
