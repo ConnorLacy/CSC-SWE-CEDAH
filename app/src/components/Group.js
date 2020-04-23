@@ -5,6 +5,7 @@ import {NavLink} from 'react-router-dom';
 import group from '../assets/group.svg';
 
 const Group = (props) => {
+    console.log('Group props: ', props.group)
     return (
         <Card style={{marginBottom: 15}}>
             <Card.Header as="h5" style={{display: 'flex'}}>
@@ -22,7 +23,10 @@ const Group = (props) => {
                 </Card.Text>
                 <Button 
                     as={NavLink}
-                    to={`/group/view/${props.group.name}/${props.group.id}`}
+                    to={{
+                        pathname:`/view/${props.group.name}/${props.group.id}`,
+                        group: props.group
+                    }}
                     variant="primary" 
                     >
                         Open Group
