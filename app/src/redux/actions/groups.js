@@ -1,6 +1,6 @@
 import {validateEntry} from '../../helper';
 
-const BASE_URL = "https://semiotic-karma-248216.ue.r.appspot.com/"
+const BASE_URL = "https://semiotic-karma-248216.ue.r.appspot.com"
 
 export const getMyGroups = (userId, token) => {
     console.log('base url: ', BASE_URL)
