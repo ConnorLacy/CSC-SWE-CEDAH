@@ -27,9 +27,11 @@ const DashboardControl = (props) => {
             break;
         case 'meetings':
             buttons = (
-                <Button 
-                    onClick={props.showModal}
-                    variant="light">Create Meeting</Button>
+                <CustomDropdown 
+                        title={'Create Meeting'} 
+                        message={'Enter the group you wish to Join'}
+                        placeholder={'Group Name'}
+                        meeting/> 
             )
             break;
         default: break;
