@@ -19,6 +19,8 @@ public class MeetingPossibility {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
+    @Getter
+    @Setter
     private long id;
 
     @Getter
@@ -39,7 +41,20 @@ public class MeetingPossibility {
 
     @NotNull
     @ManyToOne
+    @Getter
+    @Setter
     @JoinColumn(name="group_id", referencedColumnName = "group_id")
     private MeetupGroup group;
+
+    public MeetingPossibility(){}
+    
+    public MeetingPossibility(
+            String day, Time start_time, 
+            Time end_time, long vote_count, MeetupGroup group){
+        this.day = day;
+        this.start_time = start_time;
+        this.end_time = end_time;
+        this.group = group;
+    }
     
 }
