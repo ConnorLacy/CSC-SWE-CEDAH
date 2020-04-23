@@ -7,7 +7,6 @@ import DetailCard from '../components/DetailCard';
 import {Col, Nav, Row, Tab, Tabs} from 'react-bootstrap';
 
 const Groupviewer = (props) => {
-
     var group = props.location.group || ''
     var groupId = group.id || ''
     var groupName = group.name || ''
@@ -15,31 +14,36 @@ const Groupviewer = (props) => {
     
     var memberCards = null
     var meetingCards = null
-
-    console.log("Test: ", group && group.items)
-    console.log('type: ', group.name)
-    if(group){
-        if(group.members > 0) {
-            console.log('mapping group members')
-            memberCards = group['members'].map((member, index) => (
-                <DetailCard
-                    key={index}
-                    member={member}/>
-            ))
+    
+    try{
+        console.log("Meetings: ", group && group.meetings)
+        console.log("Members: ", group && group.members)
+        if(typeof(group) !== undefined){
+            if(group.members.length > 0) {
+                console.log('mapping group members')
+                memberCards = group.members.map((member, index) => (
+                    <DetailCard
+                        key={index}
+                        member={member}/>
+                ))
+            }
+            else {
+                memberCards = <p>Womp. No members yet!</p>
+            }
+            if(group.meetings.length > 0){
+                console.log('making the meetings cards')
+                meetingCards = group.meetings.map((meeting, index) => (
+                    <DetailCard
+                        key={index}
+                        meeting={meeting}/>
+                ))
+            }
+            else {
+                meetingCards = <p>Nice. No meetings</p> 
+            }
         }
-        else {
-            memberCards = <p>Womp. No members yet!</p>
-        }
-        if(group.meetings.length > 0){
-            meetingCards = group['meetings'].map((meeting, index) => (
-                <DetailCard
-                    key={index}
-                    meeting={meeting}/>
-            ))
-        }
-        else {
-            meetingCards = <p>Nice. No meetings</p> 
-        }
+    } catch (err){
+        console.log(err)
     }
 
     return (
