@@ -34,6 +34,7 @@ const SignupForm = (props) => {
             setLoading(true);
             console.log("Form data: ", formData)
             props.registerUser(formData) 
+            props.toggleForm(false)
             setLoading(false);       
         }
     }

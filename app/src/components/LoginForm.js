@@ -17,8 +17,7 @@ const LoginForm = (props) => {
             username: username, 
             password: password
         }
-        props.userLoginFetch(formUser)
-        setLoading(false);
+        props.userLoginFetch(formUser).then(setLoading(false))
     }
 
     if(props.isAuthenticated) return <Redirect push exact to="/fetcher"/>
@@ -65,7 +64,7 @@ const LoginForm = (props) => {
                                 size="sm"
                                 role="status"
                                 aria-hidden="true"
-                                />
+                                />{'  '}
                         Loading...
                         <span className="sr-only">Loading...</span>
                     </Button>
