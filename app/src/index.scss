@@ -322,7 +322,11 @@ $headerHeight: 75px;
     padding-bottom: 30px;
 }
 
-.tab-content:after {
+.tab-content .container-fluid {
+    margin-bottom: 30px;
+}
+
+.tab-content .container-fluid:after {
     position: absolute;
     border-bottom: 1px solid lightgrey;
     content: '';
