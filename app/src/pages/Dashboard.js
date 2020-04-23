@@ -55,7 +55,7 @@ const Dashboard = (props) => {
     
     useEffect(() => {
         props.getMyGroups(props.profile.id, props.token)
-    }, [props.groups.members])
+    }, [props.groups.members, props.groups])
 
     return (
         <div className="page dashboard">
