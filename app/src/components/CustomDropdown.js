@@ -19,13 +19,15 @@ const CustomDropdown = (props) => {
                 placeholder={props.placeholder}
                 aria-label={props.placeholder}
                 value={value}
-                onChange={setValue}
+                onChange={(e) => setValue(e.target.value)}
                 />
                 <InputGroup.Append>
                 {props.join ? 
                     <Button key={1} variant="primary" onClick={() => props.joinGroup(props.userId, props.token, value)}>Join</Button>
                 :
-                    <Button key={2} variant="primary" onClick={() => props.addGroup(props.userId, props.token, value)}>Add</Button>
+                    <Button key={2} variant="primary" onClick={() => {
+                        props.addGroup(props.userId, props.token, value)
+                        props.joinGroup(props.userId, props.token, value)}}>Add</Button>
                 }
                     
                 </InputGroup.Append>
