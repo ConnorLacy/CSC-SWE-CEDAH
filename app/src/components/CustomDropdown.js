@@ -27,8 +27,7 @@ const CustomDropdown = (props) => {
                     <Button key={1} variant="primary" onClick={() => props.joinGroup(props.userId, props.token, value)}>Join</Button>
                 :
                     <Button key={2} variant="primary" onClick={() => {
-                        props.addGroup(props.userId, props.token, value)
-                        props.joinGroup(props.userId, props.token, value)}}>Add</Button>
+                        props.addGroup(props.userId, props.token, value)}}>Add</Button>
                 }
                     
                 </InputGroup.Append>
