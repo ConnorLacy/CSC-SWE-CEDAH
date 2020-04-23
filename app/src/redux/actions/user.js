@@ -54,7 +54,7 @@ export const getUserInfo = (username, token) => {
 
 export const logOut = () => {
     console.log("actions.js | Logging out")
-    localStorage.removeItem('token')
+    localStorage.removeItem('state')
     return dispatch => {
         return dispatch(logoutUser())
     }
