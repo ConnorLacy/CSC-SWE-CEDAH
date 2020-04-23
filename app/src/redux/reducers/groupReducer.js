@@ -9,6 +9,10 @@ export default function groupReducer(state = initialState, action){
                 ...state,
                 groups: action.payload
             }
+        case 'LOGOUT_USER':
+            return {
+                initialState
+            }
         default: 
             return state;
     }
