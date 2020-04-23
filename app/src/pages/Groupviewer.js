@@ -1,6 +1,5 @@
-import React, { useState,useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { useParams } from 'react-router-dom';
 import back from '../assets/back.svg';
 import Calendar from '../components/Calendar';
 import LeaveGroup from '../components/LeaveGroup';
@@ -29,7 +28,7 @@ const Groupviewer = (props) => {
             ))
         }
         else {
-            memberCards = <p>Womp. No groups yet!</p>
+            memberCards = <p>Womp. No members yet!</p>
         }
         if(group.meetings.length > 0){
             meetingCards = group['meetings'].map((meeting, index) => (
