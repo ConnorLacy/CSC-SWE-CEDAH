@@ -1,5 +1,5 @@
 const initialState = {
-    groups: null,
+    groups: [],
 }
 
 export default function groupReducer(state = initialState, action){
