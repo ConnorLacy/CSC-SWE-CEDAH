@@ -288,6 +288,8 @@ $headerHeight: 75px;
 
 .logout {
     background-color: $logoBlue;
+    margin: 0;
+    max-width: unset;
     .goodbye {
         color: white;
         background-color: $logoBlue;
