@@ -74,7 +74,7 @@ export const joinGroup = (userId, token, groupName) => {
             let message = ''
             if(data.message){
                 console.log('Something went wrong:\n', data.message)
-                message = 'You are already a member of this group'
+                message = data.message
             }
             else {
                 console.log('Joined group')
