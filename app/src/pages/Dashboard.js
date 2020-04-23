@@ -15,7 +15,6 @@ import mail from '../assets/mail.svg';
 const Dashboard = (props) => {
 
     var groups = props.groups
-    var meetings = []
     var profile = props.profile
     var name = ''
     var groupCards = null
@@ -35,20 +34,19 @@ const Dashboard = (props) => {
                     ))
         }
     }
-    if(meetings){
-        if(meetings.length === 0){
-            meetingCards = <p>You have no meetings at this time</p>
-        }
-        else {
-            let meetingArr = props.groups.groups.map(({meetings}) => meetings).flat()
-            meetingCards = meetingArr.map(({meeting, index}) => (
+    if(groups){
+        let meetings = groups.map(({meetings})=>meetings).flat()
+        if(meetings.length>0){
+            console.log(meetings)
+            console.log('I have a meeting');
+            let cards = meetings.map((meeting, index)=> (
                 <DetailCard
                     key={index}
                     meeting={meeting}/>
-                ))
-            meetingCards = (
+            ))
+            var meetingCards = (
                 <CardColumns>
-                    {meetingCards}
+                    {cards}
                 </CardColumns>
             )
         }
