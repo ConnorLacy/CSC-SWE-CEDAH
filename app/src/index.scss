@@ -233,7 +233,15 @@ $headerHeight: 75px;
     .dropdown-menu.show.dropdown-menu-right {
         width: 450px !important;
         min-width: 350px !important;
-        height: 12em;
+        height: 14em;
+    }
+
+    #left-tabs-example-tabpane-second .dropdown-menu.show.dropdown-menu-right {
+        height: 25em !important;
+        .form-row {
+            justify-content: space-around;
+        }
+       
     }
 }
 
