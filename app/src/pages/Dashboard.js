@@ -15,7 +15,7 @@ import mail from '../assets/mail.svg';
 const Dashboard = (props) => {
 
     var groups = props.groups
-    var meetings = props.meetings
+    var meetings = []
     var profile = props.profile
     var name = ''
     var groupCards = null
@@ -27,9 +27,9 @@ const Dashboard = (props) => {
             groupCards = <p>Womp. You're not in any groups yet!</p>
         }
         else{
-            groupCards = groups.map((group) => (
+            groupCards = groups.map((group, index) => (
                     <Group
-                        key={group.id}
+                        key={index}
                         group={{...group}}
                         members={group.members}/>
                     ))
@@ -40,9 +40,10 @@ const Dashboard = (props) => {
             meetingCards = <p>You have no meetings at this time</p>
         }
         else {
-            meetingCards = meetings.map(({meeting}) => (
+            let meetingArr = props.groups.groups.map(({meetings}) => meetings).flat()
+            meetingCards = meetingArr.map(({meeting, index}) => (
                 <DetailCard
-                    key={meeting.id}
+                    key={index}
                     meeting={meeting}/>
                 ))
             meetingCards = (
@@ -55,7 +56,7 @@ const Dashboard = (props) => {
     
     useEffect(() => {
         props.getMyGroups(props.profile.id, props.token)
-    }, [props.groups.members, props.numberOfGroups, props.showModal])
+    }, [props.showModal])
 
     return (
         <div className="page dashboard">
@@ -132,8 +133,7 @@ const mapStateToProps = state => ({
     token: state.user.token,
     profile: state.user.profile,
     groups: state.groups.groups,
-    showModal: state.app.showModal,
-    meetings: state.groups.groups.map(({meetings}) => meetings).flat()
+    showModal: state.app.showModal
 })
 
 const mapDispatchToProps = dispatch => ({
