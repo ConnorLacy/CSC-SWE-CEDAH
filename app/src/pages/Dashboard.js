@@ -19,11 +19,11 @@ const Dashboard = (props) => {
 
     useEffect(() => {
         getData();
-    }, [loading, props.meetingList])
+    }, [loading])
 
     const getData = async () => {
         setLoading(true)
-        props.getMyGroups(1, props.token)
+        props.getMyGroups(props.profile.id, props.token)
         let meetingList = props.groups.map((group) => {
             if(group.meetings.length > 0)
             return group.meetings
@@ -52,15 +52,15 @@ const Dashboard = (props) => {
                                 paddingBottom: '30px'
                             }}>
                         <div className="user">
-                            <img className="large-icon" alt="" src={user}/>
+                            <img alt="" className="large-icon" alt="" src={user}/>
                             <h1>{name}</h1>
                             <div className="info" >
                                 <p>
-                                    <img src={phone}/>
+                                    <img alt="" src={phone}/>
                                     <span>{props.profile.phone}</span> 
                                 </p>
                                 <p>
-                                    <img src={mail}/>
+                                    <img alt="" src={mail}/>
                                     <span>{props.profile.email}</span> 
                                 </p>
                             </div>
@@ -89,7 +89,8 @@ const Dashboard = (props) => {
                                     props.groups.map((group) => (
                                         <Group
                                             key={group.id}
-                                            group={group}/>
+                                            group={{...group}}
+                                            members={group.members}/>
                                     ))
                                     :
                                     <Spinner animation="border" size="lg"/>
