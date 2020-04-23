@@ -80,12 +80,21 @@ export const registerUser = (formData) => {
                 }, 3000);
             }
             else{
+                dispatch(showModal(
+                        'SHOW_MODAL', 
+                        true, 'You created an account successfully!\
+                        Go ahead and log in to get started!'))
                 dispatch(registrationSuccess(true))
             }
         })
         .catch(err => console.log(err))
     }
 }
+
+const showModal = (type, success, message) => ({
+    type: type,
+    payload: {success: success, message: message}
+})
 
 const registrationError = message => ({
     type: 'REGISTRATION_ERROR',
