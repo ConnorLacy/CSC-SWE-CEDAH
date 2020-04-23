@@ -24,6 +24,7 @@ const Groupviewer = (props) => {
                 memberCards = group.members.map((member, index) => (
                     <DetailCard
                         key={index}
+                        ownerId={group.owner.id}
                         member={member}/>
                 ))
             }
