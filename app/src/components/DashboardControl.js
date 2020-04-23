@@ -1,5 +1,6 @@
 import React from 'react';
 import CustomDropdown from './CustomDropdown';
+import FormDropDown from './FormDropDown';
 import {Col, Container, Row} from 'react-bootstrap';
 
 const DashboardControl = (props) => {
@@ -27,10 +28,9 @@ const DashboardControl = (props) => {
             break;
         case 'meetings':
             buttons = (
-                <CustomDropdown 
+                <FormDropDown 
                         title={'Create Meeting'} 
-                        message={'Enter the group you wish to Join'}
-                        placeholder={'Group Name'}
+                        message={'Enter Details'}
                         meeting/> 
             )
             break;
