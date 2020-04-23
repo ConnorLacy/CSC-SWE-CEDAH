@@ -120,31 +120,30 @@ public class MeetupGroupController {
 
     @SuppressWarnings("unchecked")
     @PostMapping("/add")
-    public ResponseEntity<?> addGroup(
+    public ResponseEntity<?> createAndJoin(
             @RequestParam("id") int userId,
             @RequestParam("name") String groupName){
         JSONObject response = new JSONObject();
+        String stringData = "";
         int status = 200;
+
+        // Create group
         try {
-            // System.out.println("Id: " + userId + "\ngroupName: " + groupName);
-            int val = meetupGroupRepository.createGroup(groupName, userId);
-            // System.out.println("Status: " + val);
-            if(val > 0){
-                response.put(
-                    "data", 
-                    "You have created " + groupName + " successfully!"
-                );
-            }
-            else {
-                response.put(
-                    "message", 
-                    "This group name is already taken.");
+            int createQueryStatus = meetupGroupRepository.createGroup(groupName, userId);
+            if(createQueryStatus > 0){
+                stringData += "" + groupName + " was created successfully!";
+                int joinQueryStatus = groupMembershipRepository.joinGroup(userId, groupName);
+                if (joinQueryStatus > 0){
+                    stringData += " You have now joined!";
+                }
+                response.put("data", stringData);
+            } else {
+                response.put("message", "Error creating group");
             }
         } catch (Exception e){
             status = 500;
-            response.put("message", e.toString());
+            response.put("message", "Error creating group");
         }
-        System.out.println("\n" + response);
         return ResponseEntity.status(status).body(response);
     }
 
@@ -156,9 +155,7 @@ public class MeetupGroupController {
         JSONObject response = new JSONObject();
         int status = 200;
         try {
-            // System.out.println("Joining group: " + groupName + "\nId: " + userId);
             int val = groupMembershipRepository.joinGroup(userId, groupName);
-            // System.out.println("Status: " + val);
             if (val > 0){
                 response.put("data", "You have joined " + groupName);
             }
