@@ -5,7 +5,6 @@ import {NavLink} from 'react-router-dom';
 import group from '../assets/group.svg';
 
 const Group = (props) => {
-    console.log('Group props: ', props.group)
     return (
         <Card style={{marginBottom: 15}}>
             <Card.Header as="h5" style={{display: 'flex'}}>

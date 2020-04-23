@@ -30,7 +30,7 @@ const App = (props) => {
           <Route href="" path="/fetcher" exact component={Fetcher}/>
           { props.isAuthenticated ?
               <> 
-                <Route href="" path="/dashboard" exact component = {Dashboard}/>
+                <Route href="" path="/dashboard" component={Dashboard}/>
                 <Route href="" path="/view/:name/:id" component={Groupviewer}/>
                 <Route href="" path="/logout" exact component={Logout} />
               </>

@@ -12,7 +12,7 @@ const Logout = (props) => {
         }, 2000);
     })
     
-    if(!props.isAuthenticated) return <Redirect push to="/"/>
+    if(!props.isAuthenticated) return <Redirect to="/"/>
     else {
         return (
             <>
