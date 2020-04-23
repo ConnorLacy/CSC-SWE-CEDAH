@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {connect} from 'react-redux';
 import {addGroup, joinGroup} from '../redux/actions/groups';
-import { DropdownButton, FormControl, InputGroup, Button} from 'react-bootstrap'
+import { DropdownButton, Form, InputGroup, Button} from 'react-bootstrap'
 
 const CustomDropdown = (props) => {
 
@@ -15,11 +15,12 @@ const CustomDropdown = (props) => {
             >
             <h4 style={{textAlign: 'center', padding: 10}}>{props.message}</h4>
             <InputGroup className="mb-3" style={{padding: 10}}>
-                <FormControl
-                placeholder={props.placeholder}
-                aria-label={props.placeholder}
-                value={value}
-                onChange={(e) => setValue(e.target.value)}
+                <Form.Control
+                    placeholder={props.placeholder}
+                    aria-label={props.placeholder}
+                    value={value}
+                    autoFocus={true}
+                    onChange={(e) => setValue(e.target.value)}
                 />
                 <InputGroup.Append>
                 {props.join ? 
