@@ -5,11 +5,11 @@ import clock from '../assets/clock.svg';
 import phone from '../assets/phone.svg';
 import mail from '../assets/mail.svg';
 import user from '../assets/user.svg';
+import crown from '../assets/crown.svg';
 
 const DetailCard = (props) => {
     var title;
     var body;
-
     if(props.meeting){
         title = <strong>{props.meeting.day}</strong>
         body = (
@@ -30,7 +30,13 @@ const DetailCard = (props) => {
         )
     }
     else {
-        title = <strong>{formatName(props.member.name)}</strong>
+        title = (
+                    <>
+                        {(props.ownerId === props.member.id) ? 
+                            <img src={crown} alt="" style={{height: '2em', marginRight: 10}}/> : ''}
+                        <strong>{formatName(props.member.name)}</strong>
+                    </>
+                )
         body = (
             <>
                 <p>
