@@ -82,8 +82,8 @@ export const registerUser = (formData) => {
             else{
                 dispatch(showModal(
                         'SHOW_MODAL', 
-                        true, 'You created an account successfully!\
-                        Go ahead and log in to get started!'))
+                        true, 
+                        'You created an account successfully! Go ahead and log in to get started!'))
                 dispatch(registrationSuccess(true))
             }
         })
