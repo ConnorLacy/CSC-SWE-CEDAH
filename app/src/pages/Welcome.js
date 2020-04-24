@@ -36,7 +36,7 @@ const Welcome = (props) => {
         form = <LoginForm {...loaderProps}/>
     }
 
-    if(redirect) return <Redirect push to="/fetcher"/>
+    if(redirect) return <Redirect push to="/interstitial"/>
     return (
         <div className="welcome">
             <Row style={{minHeight: '100vh'}}>

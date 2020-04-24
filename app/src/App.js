@@ -27,7 +27,7 @@ const App = (props) => {
             success={props.success}
             message={props.message}/>
           <Route href="" path="/" exact component={Welcome}/>
-          <Route href="" path="/fetcher" exact component={Fetcher}/>
+          <Route href="" path="/interstitial" exact component={Fetcher}/>
           { props.isAuthenticated ?
               <> 
                 <Route href="" path="/dashboard" component={Dashboard}/>
