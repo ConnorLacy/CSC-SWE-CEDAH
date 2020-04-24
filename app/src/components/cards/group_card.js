@@ -2,9 +2,9 @@ import React from 'react';
 import {formatName} from '../../helper';
 import {Button, Card} from 'react-bootstrap';
 import {NavLink} from 'react-router-dom';
-import group from '../assets/group.svg';
+import group from '../../assets/group.svg';
 
-const Group = (props) => {
+const GroupCard = (props) => {
     return (
         <Card style={{marginBottom: 15}}>
             <Card.Header as="h5" style={{display: 'flex'}}>
@@ -35,4 +35,4 @@ const Group = (props) => {
     )
 }
 
-export default Group;
+export default GroupCard;

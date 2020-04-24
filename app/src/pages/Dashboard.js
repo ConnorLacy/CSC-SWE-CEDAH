@@ -2,11 +2,11 @@ import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {formatName} from '../helper';
 import {getMyGroups} from '../redux/actions/groups';
-import DetailCard from '../components/DetailCard';
-import Group from '../components/Group';
-import Calendar from '../components/Calendar';
+import DetailCard from '../components/cards/detail_card';
+import Group from '../components/cards/group_card';
+import Calendar from '../components/calendar';
 import {Container, CardDeck, CardColumns, Tab, Row, Col, Nav} from 'react-bootstrap';
-import DashboardControl from '../components/DashboardControl';
+import DashboardControl from '../components/dashboard_control';
 
 import user from '../assets/user.svg';
 import phone from '../assets/phone.svg';
