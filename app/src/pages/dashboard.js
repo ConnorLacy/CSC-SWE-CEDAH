@@ -32,8 +32,7 @@ const Dashboard = (props) => {
     }, [])
 
     useEffect(() => {
-        if(profile !== null) {
-            console.log('profile here: ', profile)
+        if(profile?.id) {
             console.log('fetching groups')
             getMyGroups(profile.id, token)
         }
