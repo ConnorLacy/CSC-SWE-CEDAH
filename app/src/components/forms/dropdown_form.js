@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {addGroup, joinGroup} from '../../redux/actions/groups';
 import { DropdownButton, Form, InputGroup, Button} from 'react-bootstrap'
 
-const CustomDropdown = (props) => {
+const DropdownForm = (props) => {
 
     const [value, setValue] = useState('')
 
@@ -46,4 +46,4 @@ const mapDispatchToProps = dispatch => ({
     joinGroup: (userId, token, value) => dispatch(joinGroup(userId, token, value))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(CustomDropdown);
+export default connect(mapStateToProps, mapDispatchToProps)(DropdownForm);
