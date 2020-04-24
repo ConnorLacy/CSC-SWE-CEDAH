@@ -48,7 +48,7 @@ spring.datasource.password=&lt;YOUR_PASSWORD&gt;</code></pre>
 - Start API 
   - Navigate to /CSC-SWE-CEDAH/
   - Start API
-    - <pre><code> CSC-SWE-CEDAH connor$ ./mvnw spring-boot:run</code></pre>
+    - <pre><code> CSC-SWE-CEDAH connor$ mvn appengine:run </code></pre>
 ***
 ***
 ## App (React-Frontend)
