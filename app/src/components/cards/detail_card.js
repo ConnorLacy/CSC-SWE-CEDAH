@@ -1,5 +1,5 @@
 import React from 'react';
-import {formatName} from '../helper';
+import {formatName} from '../../helper';
 import {Card} from 'react-bootstrap';
 import clock from '../assets/clock.svg';
 import phone from '../assets/phone.svg';

@@ -1,5 +1,5 @@
 import React from 'react';
-import {formatName} from '../helper';
+import {formatName} from '../../helper';
 import {Button, Card} from 'react-bootstrap';
 import {NavLink} from 'react-router-dom';
 import group from '../assets/group.svg';
