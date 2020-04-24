@@ -1,3 +1,12 @@
+import {
+    REGISTRATION_ERROR,
+    REGISTRATION_SUCCESS,
+    LOGIN_USER,
+    LOGIN_ERROR,
+    LOGOUT_USER,
+    LOAD_PROFILE
+} from './types';
+
 const BASE_URL = "https://semiotic-karma-248216.ue.r.appspot.com/"
 
 export const userLoginFetch = user => {
@@ -97,31 +106,31 @@ const showModal = (type, success, message) => ({
 })
 
 const registrationError = message => ({
-    type: 'REGISTRATION_ERROR',
+    type: REGISTRATION_ERROR,
     payload: message
 })
 
 const registrationSuccess = status => ({
-    type: 'REGISTRATION_SUCCESS',
+    type: REGISTRATION_SUCCESS,
     payload: status
 })
 
 const loginUser = (userObj, token, bool) => ({
-    type: 'LOGIN_USER',
+    type: LOGIN_USER,
     payload: { user: userObj, token: token, isAuthenticated: bool }
 })
 
 const loginError = message => ({
-    type: 'LOGIN_ERROR',
+    type: LOGIN_ERROR,
     payload: message
 })
 
 const logoutUser = () => ({
-    type: 'LOGOUT_USER',
+    type: LOGOUT_USER,
     payload: false
 })
 
 const loadProfile = (userProfile) => ({
-    type: 'LOAD_PROFILE',
+    type: LOAD_PROFILE,
     payload: userProfile
 })

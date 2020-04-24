@@ -1,3 +1,5 @@
+import {CLOSE_MODAL} from './types'
+
 export const hideModal = () => {
     return dispatch => {
         dispatch(closeModal())
@@ -5,5 +7,5 @@ export const hideModal = () => {
 }
 
 const closeModal = () => ({
-    type: 'CLOSE_MODAL',
+    type: CLOSE_MODAL,
 })

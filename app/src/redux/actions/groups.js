@@ -1,4 +1,8 @@
 import {validateEntry} from '../../helper';
+import {
+    FETCH_GROUPS,
+    SHOW_MODAL
+} from './types'
 
 const BASE_URL = "https://semiotic-karma-248216.ue.r.appspot.com"
 
@@ -26,7 +30,7 @@ export const getMyGroups = (userId, token) => {
 
 export const addGroup = (userId, token, groupName) => {
     return dispatch => {
-        if(!validateEntry(groupName)) dispatch(showModal('SHOW_MODAL', false, 'Invalid Input'))
+        if(!validateEntry(groupName)) dispatch(showModal(false, 'Invalid Input'))
         else {
             return fetch(`${BASE_URL}/groups/add?id=${userId}&name=${groupName}`, {
                 method: 'POST',
@@ -50,7 +54,7 @@ export const addGroup = (userId, token, groupName) => {
                     success = true
                     message = data.data
                 }
-                dispatch(showModal('SHOW_MODAL', success, message))
+                dispatch(showModal(success, message))
             })
             .catch(err => console.log('Error: ', err))
         }
@@ -81,7 +85,7 @@ export const joinGroup = (userId, token, groupName) => {
                 success = true
                 message = data.data
             }
-            dispatch(showModal('SHOW_MODAL', success, message))
+            dispatch(showModal(success, message))
         })
         .catch(err => console.log('Error: ', err))
     }
@@ -111,18 +115,18 @@ export const leaveGroup = (groupId, userId, token) => {
                     success = true
                     message = data.data
                 }
-                dispatch(showModal('SHOW_MODAL', success, message))
+                dispatch(showModal(success, message))
             })
             .catch(err => console.log('Error: ', err))
     }
 }
 
 const setGroups = (groups) => ({
-    type: 'FETCH_GROUPS',
+    type: FETCH_GROUPS,
     payload: groups
 })
 
-const showModal = (type, success, message) => ({
-    type: type,
+const showModal = (success, message) => ({
+    type: SHOW_MODAL,
     payload: {success: success, message: message}
 })
