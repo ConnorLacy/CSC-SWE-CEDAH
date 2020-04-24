@@ -12,8 +12,7 @@ const SimpleDropdownForm = (props) => {
     const [formGroup, setGroup] = useState()
     const [timeError, setTimeError] = useState('')
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
+    const handleSubmit = () => {
         if(startTime>=endTime){
             setTimeError('End time must be after start')
             setTimeout(() => {

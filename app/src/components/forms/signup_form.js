@@ -22,13 +22,11 @@ const SignupForm = (props) => {
         password: password,
     }
 
-    const validateAndSubmit = (e) => {
-        e.preventDefault();
+    const validateAndSubmit = () => {
         if(password !== password2){
             setMessage("Passwords do not match")
         }
         else {
-            e.preventDefault()
             props.setLoading(true);
             console.log("Form data: ", formData)
             props.registerUser(formData).then(() => {
@@ -39,8 +37,7 @@ const SignupForm = (props) => {
     }
 
         return (
-            <Form 
-                onSubmit={e => validateAndSubmit(e)}>
+            <Form>
                 <Form.Label 
                 style={
                     { color: 'red', 
@@ -139,7 +136,7 @@ const SignupForm = (props) => {
                         <span className="sr-only">Loading...</span>
                     </Button>
                     :
-                    <Button variant="primary" type="submit">Submit</Button>
+                    <Button variant="primary" onClick={validateAndSubmit}>Submit</Button>
                 }
             </Form>
         )

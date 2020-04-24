@@ -7,8 +7,7 @@ const LoginForm = (props) => {
     const [username,  setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
+    const handleSubmit = () => {
         let formUser = {
             username: username, 
             password: password
@@ -23,8 +22,7 @@ const LoginForm = (props) => {
                 margin: 'auto',
                 maxWidth: 500,
                 minWidth: 250
-            }}
-            onSubmit={e => handleSubmit(e)}>
+            }}>
             <Form.Label 
             style={
                 { color: 'red', 
@@ -63,7 +61,7 @@ const LoginForm = (props) => {
                     <span className="sr-only">Loading...</span>
                 </Button>
                 :
-                <Button variant="primary" type="submit">Submit</Button>
+                <Button variant="primary" onClick={handleSubmit}>Submit</Button>
             }
         </Form>
     )
