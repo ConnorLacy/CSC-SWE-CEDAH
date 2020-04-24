@@ -1,9 +1,15 @@
-import {SHOW_MODAL, CLOSE_MODAL} from '../actions/types';
+import {
+    SHOW_MODAL, 
+    CLOSE_MODAL, 
+    REQUEST_START,
+    REQUEST_COMPLETE
+} from '../actions/types';
 
 const initialState = {
     showModal: false,
     success: true,
-    message: null
+    message: null,
+    isFetching: false,
 }
 
 export const appReducer = (state=initialState, action) => {
@@ -18,6 +24,16 @@ export const appReducer = (state=initialState, action) => {
                 showModal: true,
                 success: action.payload.success,
                 message: action.payload.message
+            }
+        case REQUEST_START: 
+            return {
+                ...state,
+                isFetching: true
+            }
+        case REQUEST_COMPLETE:
+            return {
+                ...state,
+                isFetching: false
             }
         default: 
             return {
