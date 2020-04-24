@@ -1,7 +1,7 @@
 import {batch} from 'react-redux';
 import {validateEntry} from '../../helper';
 import {
-    FETCH_GROUPS,
+    SET_GROUPS,
     SHOW_MODAL,
     REQUEST_START,
     REQUEST_COMPLETE
@@ -16,7 +16,7 @@ const requestComplete = () => ({
     type: REQUEST_COMPLETE
 })
 const setGroups = (groups) => ({
-    type: FETCH_GROUPS,
+    type: SET_GROUPS,
     payload: groups
 })
 const showModal = (success, message) => ({
