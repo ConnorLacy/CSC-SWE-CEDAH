@@ -11,9 +11,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const persistedState = loadState();
 const store = configureStore(persistedState)
 
-store.subscribe(() => {
-    saveState(store.getState())
-})
+// store.subscribe(() => {
+//     saveState(store.getState())
+// })
 
 ReactDOM.render(
     <Provider store={store}>
