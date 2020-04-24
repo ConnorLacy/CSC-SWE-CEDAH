@@ -12,16 +12,16 @@ const Welcome = (props) => {
     const [loading, setLoading] = useState(false)
     const [signup, toggleForm] = useState(true);
 
+    useEffect(() => {
+        if(props.isAuthenticated) return setRedirect(true)
+        setLoading(state => props.isFetching)
+    },[props.isAuthenticated, props.isFetching])
+
     let loaderProps = {
         loading: loading, 
         setLoading: setLoading,
         toggleForm: toggleForm
     }
-
-    useEffect(() => {
-        if(props.isAuthenticated) return setRedirect(true)
-    },[props.isAuthenticated])
-
 
     var link, message, form, header;
     if(signup){
@@ -72,7 +72,8 @@ const Welcome = (props) => {
 }
 
 const mapStateToProps = state =>({
-    isAuthenticated: state.user.isAuthenticated
+    isAuthenticated: state.user.isAuthenticated,
+    isFetching: state.app.isFetching
 })
 
 export default connect(mapStateToProps, null)(Welcome);
