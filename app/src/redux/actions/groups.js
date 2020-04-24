@@ -25,8 +25,6 @@ const showModal = (success, message) => ({
 })
 
 export const getMyGroups = (userId, token) => {
-    console.log('base url: ', BASE_URL)
-    console.log('Getting my groups')
     return async dispatch => {
         dispatch(requestStart())
         return fetch(`${BASE_URL}/groups/retrieve?id=${userId}`, {
