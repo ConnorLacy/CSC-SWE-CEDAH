@@ -5,11 +5,8 @@ import MyNav from './components/MyNav';
 import MyModal from './components/MyModal';
 import Welcome from './pages/Welcome';
 import Fetcher from './pages/Fetcher';
-import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
 import Logout from './pages/Logout';
-import AddGroup from './pages/AddGroup';
-import JoinGroup from './pages/JoinGroup';
 import Groupviewer from './pages/Groupviewer';
 
 import {
@@ -31,13 +28,10 @@ const App = (props) => {
             message={props.message}/>
           <Route href="" path="/" exact component={Welcome}/>
           <Route href="" path="/fetcher" exact component={Fetcher}/>
-          <Route href="" path="/signup" exact component={Signup}/>
           { props.isAuthenticated ?
               <> 
-                <Route href="" path="/dashboard" exact component = {Dashboard}/>
-                <Route href="" path="/group/view/:name/:id" component={Groupviewer}/>
-                <Route href="" path="/group/add" component={AddGroup}/>
-                <Route href="" path="/group/join" component={JoinGroup}/>
+                <Route href="" path="/dashboard" component={Dashboard}/>
+                <Route href="" path="/view/:name/:id" component={Groupviewer}/>
                 <Route href="" path="/logout" exact component={Logout} />
               </>
               : <Redirect push to="/"/>

@@ -5,3 +5,11 @@ export const formatName = (fullName) => {
     )
     return newArr.join(' ');
 }
+
+export const validateEntry = (entry) => {
+    if(typeof(entry) === 'undefined') return false
+    if(entry === null) return false
+    if(entry.length === 0) return false 
+    if(!(/^([a-z]|[A-Z]|\s*|[0-9]){4,100}$/.test(entry))) return false
+    return true
+}

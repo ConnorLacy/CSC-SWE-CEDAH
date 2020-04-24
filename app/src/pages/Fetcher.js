@@ -8,9 +8,9 @@ const Fetcher = (props) => {
 
     useEffect(() => {
         props.getUserInfo(props.username, props.token)
-    }, )
+    }, [props.profile])
 
-    if(props.profile) return <Redirect push to="/dashboard"/>
+    if(typeof(props.profile) !== 'undefined') return <Redirect push to="/dashboard"/>
     else {
         return (
             <>
@@ -22,7 +22,6 @@ const Fetcher = (props) => {
                     </div>
                 </div>
             </>
-
         )
     }
 }
@@ -30,7 +29,7 @@ const Fetcher = (props) => {
 const mapStatetoProps = state => ({
     token: state.user.token,
     username: state.user.username,
-    profile: state.user.profile
+    profile: state.user.profile,
 })
 
 const mapDispatchToProps = dispatch => ({

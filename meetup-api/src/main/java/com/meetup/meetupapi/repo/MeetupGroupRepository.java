@@ -27,4 +27,7 @@ public interface MeetupGroupRepository extends JpaRepository<MeetupGroup, Long> 
         nativeQuery = true
     )
     int createGroup(String groupName, int userId);
+
+
+    MeetupGroup findById(long groupId);
 }

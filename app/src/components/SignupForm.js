@@ -34,6 +34,7 @@ const SignupForm = (props) => {
             setLoading(true);
             console.log("Form data: ", formData)
             props.registerUser(formData) 
+            props.toggleForm(false)
             setLoading(false);       
         }
     }
@@ -65,7 +66,6 @@ const SignupForm = (props) => {
                                 type="text" 
                                 value={lName}
                                 onChange={e => setlName(e.target.value)}
-                                autoFocus={true}
                                 required/>
                     </Form.Group>
                 </Form.Row>

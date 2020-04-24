@@ -1,7 +1,9 @@
+const BASE_URL = "https://semiotic-karma-248216.ue.r.appspot.com/"
+
 export const userLoginFetch = user => {
     console.log("Logging in...")
     return async dispatch => {
-        return fetch('/login' , {
+        return fetch(`${BASE_URL}/login` , {
             method: 'POST',
             cache: 'no-cache',
             headers: {
@@ -32,7 +34,7 @@ export const userLoginFetch = user => {
 export const getUserInfo = (username, token) => {
     console.log('Getting user info')
     return async dispatch => {
-        return fetch(`/users/profile?username=${username}`, {
+        return fetch(`${BASE_URL}/users/profile?username=${username}`, {
             method: 'POST',
             cache: 'no-cache',
             headers: {
@@ -52,7 +54,7 @@ export const getUserInfo = (username, token) => {
 
 export const logOut = () => {
     console.log("actions.js | Logging out")
-    localStorage.removeItem('token')
+    localStorage.removeItem('state')
     return dispatch => {
         return dispatch(logoutUser())
     }
@@ -61,7 +63,7 @@ export const logOut = () => {
 export const registerUser = (formData) => {
     console.log("Attempting registration");
     return dispatch => {
-        return fetch('/users/sign-up', {
+        return fetch(`${BASE_URL}/users/sign-up`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -78,12 +80,21 @@ export const registerUser = (formData) => {
                 }, 3000);
             }
             else{
+                dispatch(showModal(
+                        'SHOW_MODAL', 
+                        true, 
+                        'You created an account successfully! Go ahead and log in to get started!'))
                 dispatch(registrationSuccess(true))
             }
         })
         .catch(err => console.log(err))
     }
 }
+
+const showModal = (type, success, message) => ({
+    type: type,
+    payload: {success: success, message: message}
+})
 
 const registrationError = message => ({
     type: 'REGISTRATION_ERROR',

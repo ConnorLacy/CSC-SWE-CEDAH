@@ -1,50 +1,55 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom';
-import {Button} from 'react-bootstrap';
+import CustomDropdown from './CustomDropdown';
+import FormDropDown from './FormDropDown';
+import {Col, Container, Row} from 'react-bootstrap';
 
 const DashboardControl = (props) => {
     let type = props.tab.trim().toLowerCase()
+    var buttons;
+    switch(type){
+        case 'calendar' || 'settings': 
+            buttons = <></>
+            break;
+        case 'groups':
+            buttons = (
+                <>
+                    <CustomDropdown 
+                        title={'Create Group'} 
+                        message={'Enter the group you wish to Create'}
+                        placeholder={'Group Name'}
+                        create/>    
+                    <CustomDropdown 
+                        title={'Join Group'} 
+                        message={'Enter the group you wish to Join'}
+                        placeholder={'Group Name'}
+                        join/>    
+                </> 
+            )
+            break;
+        case 'meetings':
+            buttons = (
+                <FormDropDown 
+                        title={'Create Meeting'} 
+                        message={'Enter Details'}
+                        meeting/> 
+            )
+            break;
+        default: break;
+    }
+
     return (
-        <>
-        <div className="control-bar">
-            <div 
-                className="filters"
-                style={{
-                    display: 'flex',
-                    alignItems: 'flex-end',
-                    width: '65%'
-                }}>
-                <h1 style={{margin: 'unset'}}>{props.tab}</h1>
-            </div>
-            <div 
-                className="controls"
-                style={{
-                    display: 'flex',
-                    width: '35%',
-                    justifyContent: 'space-between',
-                    alignItems: 'flex-end',
-                }}>
-                {(type === 'groups') ?
-                    <>
-                        <Button 
-                            as={NavLink} 
-                            to="/group/add"
-                            variant="light">Create Group</Button>    
-                        <Button 
-                            as={NavLink} 
-                            to="/group/join"
-                            variant="light">Join Group</Button>
-                    </>
-                :
-                    <Button 
-                        as={NavLink} 
-                        to="/group/add"
-                        variant="light">Create Meeting</Button>    
-                }
-            </div>
-        </div>
-        <br/>
-        </>
+            <Container fluid>
+                <Col>
+                    <Row style={{height: '80px',padding: '15px'}}>
+                        <Col>
+                            <h1 style={{textAlign: 'left', margin: 'unset'}}>{props.tab}</h1>
+                        </Col>
+                        <Col style={{display: 'flex', alignItems: 'center'}}>
+                            {buttons}
+                        </Col>
+                    </Row>
+                </Col>
+            </Container>
     )
 }
 

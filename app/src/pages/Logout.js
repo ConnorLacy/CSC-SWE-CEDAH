@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {logOut} from '../redux/actions/user';
 import {Redirect} from 'react-router-dom';
-import {Spinner} from 'react-bootstrap';
+import {MySpinner} from '../components/MySpinner';
 
 const Logout = (props) => {
 
@@ -12,7 +12,7 @@ const Logout = (props) => {
         }, 2000);
     })
     
-    if(!props.isAuthenticated) return <Redirect push to="/"/>
+    if(!props.isAuthenticated) return <Redirect to="/"/>
     else {
         return (
             <>
@@ -20,7 +20,7 @@ const Logout = (props) => {
                     <div className="goodbye">
                         <h1>Come back soon!</h1>
                         <p>Logging you out.</p>
-                        <Spinner animation="border" size="lg"/>
+                        <MySpinner/>
                     </div>
                 </div>
             </>

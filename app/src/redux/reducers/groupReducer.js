@@ -1,5 +1,5 @@
 const initialState = {
-    groups: null,
+    groups: [],
 }
 
 export default function groupReducer(state = initialState, action){
@@ -8,6 +8,10 @@ export default function groupReducer(state = initialState, action){
             return {
                 ...state,
                 groups: action.payload
+            }
+        case 'LOGOUT_USER':
+            return {
+                initialState
             }
         default: 
             return state;

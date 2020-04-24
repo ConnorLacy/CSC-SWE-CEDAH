@@ -1,7 +1,11 @@
 package com.meetup.meetupapi.controller;
 
+import java.sql.Time;
+
 import com.meetup.meetupapi.model.ApplicationUser;
+import com.meetup.meetupapi.model.UserAvailability;
 import com.meetup.meetupapi.repo.ApplicationUserRepository;
+import com.meetup.meetupapi.repo.UserAvailabilityRepository;
 
 import org.json.simple.JSONObject;
 import org.springframework.http.ResponseEntity;
@@ -18,13 +22,17 @@ public class UserController {
 
     private ApplicationUserRepository applicationUserRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private UserAvailabilityRepository userAvailabilityRepository;
 
     public UserController(ApplicationUserRepository applicationUserRepository,
-                          BCryptPasswordEncoder bCryptPasswordEncoder) {
+                          BCryptPasswordEncoder bCryptPasswordEncoder,
+                          UserAvailabilityRepository userAvailabilityRepository) {
         this.applicationUserRepository = applicationUserRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.userAvailabilityRepository = userAvailabilityRepository;
     }
 
+    @SuppressWarnings("unchecked")
     @PostMapping("/sign-up")
     public ResponseEntity<?> signUp(@RequestBody ApplicationUser user) {
         JSONObject data = new JSONObject();
@@ -55,6 +63,7 @@ public class UserController {
         return ResponseEntity.ok().body(data);
     }
 
+    @SuppressWarnings("unchecked")
     @PostMapping("/profile")
     public ResponseEntity<?> getUser(@RequestParam("username") String username) {
         JSONObject data = new JSONObject();
@@ -73,7 +82,32 @@ public class UserController {
 
         return ResponseEntity.ok().body(data);
     }
+    
+    @SuppressWarnings("unchecked")
+    @PostMapping("/addAvailability")
+    public ResponseEntity<?> addAvailability(@RequestBody JSONObject userInput){
+        JSONObject response = new JSONObject();
+        int status = 200;
+        ApplicationUser user;
+        try {
+            long userId = Long.parseLong(userInput.get("userId").toString());
+            String day = userInput.get("day").toString();
+            Time start_time = Time.valueOf(userInput.get("startTime").toString());
+            Time end_time = Time.valueOf(userInput.get("endTime").toString());
+            user = applicationUserRepository.findById(userId);
+            UserAvailability newAvailability = new UserAvailability(day, start_time, end_time, user);
 
+            userAvailabilityRepository.save(newAvailability);
+            response.put("data", "availability added");
+
+        } catch (Exception e){
+            response.put("message", e.toString());
+        }
+
+        return ResponseEntity.status(status).body(response);
+    }
+    
+    @SuppressWarnings("unchecked")
     public JSONObject buildUserJSON(ApplicationUser user){
         JSONObject data;
         data = new JSONObject();

@@ -22,7 +22,10 @@ const Group = (props) => {
                 </Card.Text>
                 <Button 
                     as={NavLink}
-                    to={`/group/view/${props.group.name}/${props.group.id}`}
+                    to={{
+                        pathname:`/view/${props.group.name}/${props.group.id}`,
+                        group: props.group
+                    }}
                     variant="primary" 
                     >
                         Open Group
