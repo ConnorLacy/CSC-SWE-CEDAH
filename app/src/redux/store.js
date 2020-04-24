@@ -1,15 +1,18 @@
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import {createLogger} from 'redux-logger';
 import thunk from 'redux-thunk';
 import reducer from './reducers/index';
 
 const loggerMiddleware = createLogger()
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const configureStore = (persistedState) => {
  return createStore(
    reducer,
    persistedState,
-   applyMiddleware(thunk, loggerMiddleware)
+   composeEnhancers(
+     applyMiddleware(thunk, loggerMiddleware)
+   )
  );
 }
 
