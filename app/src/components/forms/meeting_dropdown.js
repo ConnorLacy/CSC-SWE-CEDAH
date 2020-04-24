@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import {connect} from 'react-redux';
-import {addGroup, joinGroup} from '../redux/actions/groups';
+import {addGroup, joinGroup} from '../../redux/actions/groups';
 import { DropdownButton, Form, Button} from 'react-bootstrap'
-import { createMeeting } from '../redux/actions/meeting';
+import { createMeeting } from '../../redux/actions/meeting';
 
 const FormDropDown = (props) => {
 
@@ -51,7 +51,7 @@ const FormDropDown = (props) => {
     useEffect(() => {
         setGroup(firstChild)
 
-    }, [])
+    }, [props.token])
     return (
         <DropdownButton
             alignRight

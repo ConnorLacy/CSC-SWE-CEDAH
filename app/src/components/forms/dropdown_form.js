@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {connect} from 'react-redux';
-import {addGroup, joinGroup} from '../redux/actions/groups';
+import {addGroup, joinGroup} from '../../redux/actions/groups';
 import { DropdownButton, Form, InputGroup, Button} from 'react-bootstrap'
 
 const CustomDropdown = (props) => {
