@@ -6,7 +6,7 @@ export const LOGIN_ERROR = 'LOGIN_ERROR'
 export const LOGOUT_USER = 'LOGOUT_USER'
 export const LOAD_PROFILE = 'LOAD_PROFILE'
 
-export const FETCH_GROUPS = 'FETCH_GROUPS'
+export const SET_GROUPS = 'SET_GROUPS'
 export const SHOW_MODAL = 'SHOW_MODAL'
 export const CLOSE_MODAL = 'CLOSE_MODAL'
 export const REQUEST_START = 'REQUEST_START'
