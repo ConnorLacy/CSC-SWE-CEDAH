@@ -1,3 +1,12 @@
+import {
+    LOGIN_USER,
+    LOGIN_ERROR,
+    LOGOUT_USER,
+    REGISTRATION_SUCCESS,
+    REGISTRATION_ERROR,
+    LOAD_PROFILE
+} from '../actions/types';
+
 const initialState = {
     profile: null,
     username: null,
@@ -14,33 +23,33 @@ const startState = {
 
 export default function userReducer(state = startState, action){
     switch(action.type){
-        case 'LOGIN_USER':
+        case LOGIN_USER:
             return {
                 ...state, 
                 username: action.payload.user,
                 token: action.payload.token,
                 isAuthenticated: action.payload.isAuthenticated
             }
-        case 'LOGIN_ERROR':
+        case LOGIN_ERROR:
             return {
                 ...state,
                 loginError: action.payload
             }
-        case 'LOGOUT_USER':
+        case LOGOUT_USER:
             return {
                 initialState
             }
-        case 'REGISTRATION_SUCCESS':
+        case REGISTRATION_SUCCESS:
             return {
                 ...state,
                 registrationSuccess: true
             }
-        case 'REGISTRATION_ERROR':
+        case REGISTRATION_ERROR:
             return {
                 ...state,
                 registrationError: action.payload
             }
-        case 'LOAD_PROFILE':
+        case LOAD_PROFILE:
             return {
                 ...state,
                 profile: action.payload 
