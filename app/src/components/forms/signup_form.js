@@ -1,8 +1,7 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {registerUser} from '../redux/actions/user';
+import {registerUser} from '../../redux/actions/user';
 import {Form, Button, Col, Spinner} from 'react-bootstrap';
-import {Redirect} from 'react-router-dom';
 
 const SignupForm = (props) => {
     const [fName, setfName] = useState("");
@@ -13,7 +12,6 @@ const SignupForm = (props) => {
     const [password, setPassword] = useState("");
     const [password2, setPassword2] = useState("");
     const [message, setMessage] = useState("");
-    const [isLoading, setLoading] = useState(false);
 
 
     let formData = {
@@ -31,16 +29,15 @@ const SignupForm = (props) => {
         }
         else {
             e.preventDefault()
-            setLoading(true);
+            props.setLoading(true);
             console.log("Form data: ", formData)
-            props.registerUser(formData) 
-            props.toggleForm(false)
-            setLoading(false);       
+            props.registerUser(formData).then(() => {
+                props.setLoading(false);
+                props.toggleForm(false)}
+            ) 
         }
     }
 
-    if(props.registrationSuccess) return <Redirect to="/login" exact push/>
-    else{
         return (
             <Form 
                 onSubmit={e => validateAndSubmit(e)}>
@@ -129,7 +126,7 @@ const SignupForm = (props) => {
                             />
                     </Form.Group>
                 </Form.Row>
-                {isLoading ?
+                {props.loading ?
                     <Button variant="primary" type="submit"> 
                         <Spinner
                                 as="span"
@@ -147,7 +144,6 @@ const SignupForm = (props) => {
             </Form>
         )
     }
-}
 
 const mapStateToProps = state => ({
     registrationError: state.user.registrationError,

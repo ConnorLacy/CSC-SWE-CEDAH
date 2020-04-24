@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react'
 import {connect} from 'react-redux';
-import {addGroup, joinGroup} from '../redux/actions/groups';
+import {addGroup, joinGroup} from '../../redux/actions/groups';
 import { DropdownButton, Form, Button} from 'react-bootstrap'
-import { createMeeting } from '../redux/actions/meeting';
+import { createMeeting } from '../../redux/actions/meeting';
 
-const FormDropDown = (props) => {
+const SimpleDropdownForm = (props) => {
 
     const [startTime, setStartTime] = useState('09:00')
     const [endTime, setEndTime] = useState('09:30')
@@ -51,7 +51,7 @@ const FormDropDown = (props) => {
     useEffect(() => {
         setGroup(firstChild)
 
-    }, [])
+    }, [props.token])
     return (
         <DropdownButton
             alignRight
@@ -124,4 +124,4 @@ const mapDispatchToProps = dispatch => ({
     createMeeting: (formData, token) => dispatch(createMeeting(formData, token))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(FormDropDown);
+export default connect(mapStateToProps, mapDispatchToProps)(SimpleDropdownForm);

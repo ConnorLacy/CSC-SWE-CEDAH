@@ -1,13 +1,13 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {hideModal} from './redux/actions/app';
-import MyNav from './components/MyNav';
-import MyModal from './components/MyModal';
-import Welcome from './pages/Welcome';
-import Fetcher from './pages/Fetcher';
-import Dashboard from './pages/Dashboard';
-import Logout from './pages/Logout';
-import Groupviewer from './pages/Groupviewer';
+import MyNav from './components/nav';
+import MyModal from './components/modal';
+import Welcome from './pages/welcome';
+import Fetcher from './pages/fetcher';
+import Dashboard from './pages/dashboard';
+import Logout from './pages/logout';
+import Groupviewer from './pages/group_details';
 
 import {
   BrowserRouter as Router, 

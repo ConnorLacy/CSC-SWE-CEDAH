@@ -1,11 +1,11 @@
 import React from 'react';
-import {formatName} from '../helper';
+import {formatName} from '../../helper';
 import {Card} from 'react-bootstrap';
-import clock from '../assets/clock.svg';
-import phone from '../assets/phone.svg';
-import mail from '../assets/mail.svg';
-import user from '../assets/user.svg';
-import crown from '../assets/crown.svg';
+import clock from '../../assets/clock.svg';
+import phone from '../../assets/phone.svg';
+import mail from '../../assets/mail.svg';
+import user from '../../assets/user.svg';
+import crown from '../../assets/crown.svg';
 
 const DetailCard = (props) => {
     var title;

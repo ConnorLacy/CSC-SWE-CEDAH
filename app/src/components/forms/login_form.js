@@ -1,23 +1,23 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {userLoginFetch} from '../redux/actions/user';
+import {userLoginFetch} from '../../redux/actions/user';
 import {Button, Form, Spinner} from 'react-bootstrap';
 import {Redirect} from 'react-router-dom';
 
 
 const LoginForm = (props) => {
-    const [isLoading, setLoading] = useState(false);
+    console.log(props)
     const [username,  setUsername] = useState('');
     const [password, setPassword] = useState('');
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        setLoading(true);
+        props.setLoading(true);
         let formUser = {
             username: username, 
             password: password
         }
-        props.userLoginFetch(formUser).then(setLoading(false))
+        setTimeout(() => {props.userLoginFetch(formUser).then(props.setLoading(false))}, 3000)
     }
 
     if(props.isAuthenticated) return <Redirect push exact to="/fetcher"/>
@@ -56,7 +56,7 @@ const LoginForm = (props) => {
                         onChange={e => setPassword(e.target.value)}
                         required/>
                 </Form.Group>
-                {isLoading ?
+                {props.loading ?
                     <Button variant="primary" type="submit"> 
                         <Spinner
                                 as="span"
