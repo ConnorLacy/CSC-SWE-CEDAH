@@ -119,23 +119,23 @@ const Dashboard = (props) => {
                     <Col sm={9} style={{height: '100%', overflow: 'auto'}}>
                     <Tab.Content>
                         <Tab.Pane eventKey="first">
-                            {/* <DashboardControl tab={'Groups'}/> */}
+                            <DashboardControl tab={'Groups'}/>
                             <div style={{width: '95%', margin: 'auto'}}>
                                 {groupCards}
                             </div>
                         </Tab.Pane>
                         <Tab.Pane eventKey="second">
-                            {/* <DashboardControl tab={'Meetings'}/> */}
+                            <DashboardControl tab={'Meetings'}/>
                             <CardDeck style={{width: '95%', margin: 'auto'}}>
                                 {meetingCards}
                             </CardDeck>
                         </Tab.Pane>
                         <Tab.Pane eventKey="third">
-                            {/* <DashboardControl tab={'Calendar'}/> */}
+                            <DashboardControl tab={'Calendar'}/>
                             <Calendar/>
                         </Tab.Pane>
                         <Tab.Pane eventKey="fourth">
-                            {/* <DashboardControl tab={'Settings'}/> */}
+                            <DashboardControl tab={'Settings'}/>
                         </Tab.Pane>
                     </Tab.Content>
                     </Col>
