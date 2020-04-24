@@ -46,9 +46,9 @@ const loadProfile = (userProfile) => ({
 })
 
 export const userLoginFetch = user => {
-    return dispatch => {
+    return async dispatch => {
         dispatch(requestStart())
-        return fetch(`${BASE_URL}/login` , {
+        const data = await fetch(`${BASE_URL}/login` , {
             method: 'POST',
             cache: 'no-cache',
             headers: {
@@ -56,36 +56,29 @@ export const userLoginFetch = user => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(user)
+        }).then(d => d.json()).catch(err => console.log(err))
+
+        if(data?.message){
+            return batch(() => {
+                dispatch(loginError(data.message))
+                setTimeout(() => {
+                    dispatch(loginError(null))
+                }, 3000);
+                dispatch(requestComplete())
+            })
+        }
+        
+        return batch(() => {
+            dispatch(loginUser(data.user, data.jwt, true))
+            dispatch(requestComplete())
         })
-        .then(response => response.json())
-        .then(data => {
-            if(data.message){
-                console.log("Could not login: ", data.message)
-                batch(() => {
-                    dispatch(loginError(data.message))
-                    setTimeout(() => {
-                        dispatch(loginError(null))
-                    }, 3000);
-                    dispatch(requestComplete())
-                })
-            }
-            else {
-                console.log("Successful login. Token: ", data.jwt)
-                console.log("user: ", data.user)
-                batch(() => {
-                    dispatch(loginUser(data.user, data.jwt, true))
-                    dispatch(requestComplete())
-                })
-            }
-        })
-        .catch(err => console.log(err))
     }
 }
 
 export const getUserInfo = (username, token) => {
-    return dispatch => {
+    return async dispatch => {
         dispatch(requestStart())
-        return fetch(`${BASE_URL}/users/profile?username=${username}`, {
+        let data = await fetch(`${BASE_URL}/users/profile?username=${username}`, {
             method: 'POST',
             cache: 'no-cache',
             headers: {
@@ -93,16 +86,12 @@ export const getUserInfo = (username, token) => {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
+        }).then(d => d.json()).catch(err => console.log(err))
+        
+        return batch(() => {
+            dispatch(loadProfile(data.user))
+            dispatch(requestComplete())
         })
-        .then(response => response.json())
-        .then(data => {
-            console.log('getuserinfo response: ', data)
-            batch(() => {
-                dispatch(loadProfile(data.user))
-                dispatch(requestComplete())
-            })
-        })
-        .catch(err => console.log(err))
     }
 }
 
@@ -114,39 +103,35 @@ export const logOut = () => {
 }
 
 export const registerUser = (formData) => {
-    return dispatch => {
+    return async dispatch => {
         dispatch(requestStart())
-        return fetch(`${BASE_URL}/users/sign-up`, {
+        const data = await fetch(`${BASE_URL}/users/sign-up`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(formData)
+        }).then(d => d.json()).catch(err => console.log(err))
+
+        if(data?.message){
+            return batch(() => {
+                dispatch(registrationError(data.message))
+                setTimeout(() => {
+                    dispatch(registrationError(null))
+                }, 3000);
+                dispatch(requestComplete())
+            })
+        }
+        
+        return batch(() => {
+            dispatch(showModal(
+                    SHOW_MODAL, 
+                    true, 
+                    'You created an account successfully! Go ahead and log in to get started!'))
+            dispatch(registrationSuccess(true))
+            dispatch(requestComplete())
         })
-        .then(response => response.json())
-        .then(data => {
-            if(data.message){
-                batch(() => {
-                    dispatch(registrationError(data.message))
-                    setTimeout(() => {
-                        dispatch(registrationError(null))
-                    }, 3000);
-                    dispatch(requestComplete())
-                })
-            }
-            else{
-                batch(() => {
-                    dispatch(showModal(
-                            SHOW_MODAL, 
-                            true, 
-                            'You created an account successfully! Go ahead and log in to get started!'))
-                    dispatch(registrationSuccess(true))
-                    dispatch(requestComplete())
-                })
-            }
-        })
-        .catch(err => console.log(err))
     }
 }
 
