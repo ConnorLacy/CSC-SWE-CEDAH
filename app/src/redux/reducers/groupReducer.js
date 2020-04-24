@@ -1,15 +1,20 @@
+import {
+    SET_GROUPS,
+    LOGOUT_USER
+} from '../actions/types';
+
 const initialState = {
-    groups: [],
+    groups: null,
 }
 
 export default function groupReducer(state = initialState, action){
     switch(action.type){
-        case 'FETCH_GROUPS':
+        case SET_GROUPS:
             return {
                 ...state,
                 groups: action.payload
             }
-        case 'LOGOUT_USER':
+        case LOGOUT_USER:
             return {
                 initialState
             }
