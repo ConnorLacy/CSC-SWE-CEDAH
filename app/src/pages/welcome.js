@@ -8,14 +8,15 @@ import logo_blue_grey from '../assets/logo_blue_grey.png';
 import {NavLink, Redirect} from 'react-router-dom';
 
 const Welcome = (props) => {
+    const { isAuthenticated, isFetching } = props
     const [redirect, setRedirect] = useState(false)
     const [loading, setLoading] = useState(false)
     const [signup, toggleForm] = useState(true);
 
     useEffect(() => {
-        if(props.isAuthenticated) return setRedirect(true)
-        setLoading(state => props.isFetching)
-    },[props.isAuthenticated, props.isFetching])
+        if(isAuthenticated) return setRedirect(true)
+        setLoading(state => isFetching)
+    },[isAuthenticated, isFetching])
 
     let loaderProps = {
         loading: loading, 
@@ -36,7 +37,7 @@ const Welcome = (props) => {
         form = <LoginForm {...loaderProps}/>
     }
 
-    if(redirect) return <Redirect push to="/interstitial"/>
+    if(redirect) return <Redirect push to="/dashboard"/>
     return (
         <div className="welcome">
             <Row style={{minHeight: '100vh'}}>
