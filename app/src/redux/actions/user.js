@@ -46,7 +46,7 @@ const loadProfile = (userProfile) => ({
 })
 
 export const userLoginFetch = user => {
-    return async dispatch => {
+    return dispatch => {
         dispatch(requestStart())
         return fetch(`${BASE_URL}/login` , {
             method: 'POST',
@@ -83,7 +83,7 @@ export const userLoginFetch = user => {
 }
 
 export const getUserInfo = (username, token) => {
-    return async dispatch => {
+    return dispatch => {
         dispatch(requestStart())
         return fetch(`${BASE_URL}/users/profile?username=${username}`, {
             method: 'POST',
