@@ -1,17 +1,53 @@
+import {batch} from 'react-redux';
 import {
     REGISTRATION_ERROR,
     REGISTRATION_SUCCESS,
     LOGIN_USER,
     LOGIN_ERROR,
     LOGOUT_USER,
-    LOAD_PROFILE
+    LOAD_PROFILE,
+    SHOW_MODAL,
 } from './types';
+
+import {
+    requestStart,
+    requestComplete
+} from './requests';
 
 const BASE_URL = "https://semiotic-karma-248216.ue.r.appspot.com/"
 
+const showModal = (type, success, message) => ({
+    type: type,
+    payload: {success: success, message: message}
+})
+const registrationError = message => ({
+    type: REGISTRATION_ERROR,
+    payload: message
+})
+const registrationSuccess = status => ({
+    type: REGISTRATION_SUCCESS,
+    payload: status
+})
+const loginUser = (userObj, token, bool) => ({
+    type: LOGIN_USER,
+    payload: { user: userObj, token: token, isAuthenticated: bool }
+})
+const loginError = message => ({
+    type: LOGIN_ERROR,
+    payload: message
+})
+const logoutUser = () => ({
+    type: LOGOUT_USER,
+    payload: false
+})
+const loadProfile = (userProfile) => ({
+    type: LOAD_PROFILE,
+    payload: userProfile
+})
+
 export const userLoginFetch = user => {
-    console.log("Logging in...")
     return async dispatch => {
+        dispatch(requestStart())
         return fetch(`${BASE_URL}/login` , {
             method: 'POST',
             cache: 'no-cache',
@@ -25,15 +61,21 @@ export const userLoginFetch = user => {
         .then(data => {
             if(data.message){
                 console.log("Could not login: ", data.message)
-                dispatch(loginError(data.message))
-                setTimeout(() => {
-                    dispatch(loginError(null))
-                }, 3000);
+                batch(() => {
+                    dispatch(loginError(data.message))
+                    setTimeout(() => {
+                        dispatch(loginError(null))
+                    }, 3000);
+                    dispatch(requestComplete())
+                })
             }
             else {
                 console.log("Successful login. Token: ", data.jwt)
                 console.log("user: ", data.user)
-                dispatch(loginUser(data.user, data.jwt, true))
+                batch(() => {
+                    dispatch(loginUser(data.user, data.jwt, true))
+                    dispatch(requestComplete())
+                })
             }
         })
         .catch(err => console.log(err))
@@ -41,8 +83,8 @@ export const userLoginFetch = user => {
 }
 
 export const getUserInfo = (username, token) => {
-    console.log('Getting user info')
     return async dispatch => {
+        dispatch(requestStart())
         return fetch(`${BASE_URL}/users/profile?username=${username}`, {
             method: 'POST',
             cache: 'no-cache',
@@ -55,14 +97,16 @@ export const getUserInfo = (username, token) => {
         .then(response => response.json())
         .then(data => {
             console.log('getuserinfo response: ', data)
-            dispatch(loadProfile(data.user))
+            batch(() => {
+                dispatch(loadProfile(data.user))
+                dispatch(requestComplete())
+            })
         })
         .catch(err => console.log(err))
     }
 }
 
 export const logOut = () => {
-    console.log("actions.js | Logging out")
     localStorage.removeItem('state')
     return dispatch => {
         return dispatch(logoutUser())
@@ -70,8 +114,8 @@ export const logOut = () => {
 }
 
 export const registerUser = (formData) => {
-    console.log("Attempting registration");
     return dispatch => {
+        dispatch(requestStart())
         return fetch(`${BASE_URL}/users/sign-up`, {
             method: 'POST',
             headers: {
@@ -83,54 +127,27 @@ export const registerUser = (formData) => {
         .then(response => response.json())
         .then(data => {
             if(data.message){
-                dispatch(registrationError(data.message))
-                setTimeout(() => {
-                    dispatch(registrationError(null))
-                }, 3000);
+                batch(() => {
+                    dispatch(registrationError(data.message))
+                    setTimeout(() => {
+                        dispatch(registrationError(null))
+                    }, 3000);
+                    dispatch(requestComplete())
+                })
             }
             else{
-                dispatch(showModal(
-                        'SHOW_MODAL', 
-                        true, 
-                        'You created an account successfully! Go ahead and log in to get started!'))
-                dispatch(registrationSuccess(true))
+                batch(() => {
+                    dispatch(showModal(
+                            SHOW_MODAL, 
+                            true, 
+                            'You created an account successfully! Go ahead and log in to get started!'))
+                    dispatch(registrationSuccess(true))
+                    dispatch(requestComplete())
+                })
             }
         })
         .catch(err => console.log(err))
     }
 }
 
-const showModal = (type, success, message) => ({
-    type: type,
-    payload: {success: success, message: message}
-})
 
-const registrationError = message => ({
-    type: REGISTRATION_ERROR,
-    payload: message
-})
-
-const registrationSuccess = status => ({
-    type: REGISTRATION_SUCCESS,
-    payload: status
-})
-
-const loginUser = (userObj, token, bool) => ({
-    type: LOGIN_USER,
-    payload: { user: userObj, token: token, isAuthenticated: bool }
-})
-
-const loginError = message => ({
-    type: LOGIN_ERROR,
-    payload: message
-})
-
-const logoutUser = () => ({
-    type: LOGOUT_USER,
-    payload: false
-})
-
-const loadProfile = (userProfile) => ({
-    type: LOAD_PROFILE,
-    payload: userProfile
-})
