@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {registerUser} from '../../redux/actions/user';
 import {Form, Button, Col, Spinner} from 'react-bootstrap';
-import {Redirect} from 'react-router-dom';
 
 const SignupForm = (props) => {
     const [fName, setfName] = useState("");
