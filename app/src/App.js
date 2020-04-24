@@ -4,7 +4,7 @@ import {hideModal} from './redux/actions/app';
 import MyNav from './components/nav';
 import MyModal from './components/modal';
 import Welcome from './pages/welcome';
-import Fetcher from './pages/fetcher';
+import Fetcher from './components/fetcher';
 import Dashboard from './pages/dashboard';
 import Logout from './pages/logout';
 import Groupviewer from './pages/group_details';

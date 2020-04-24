@@ -5,7 +5,7 @@ import {getUserInfo} from '../redux/actions/user';
 import {getMyGroups} from '../redux/actions/groups';
 import DetailCard from '../components/cards/detail_card';
 import Group from '../components/cards/group_card';
-import Fetcher from '../pages/fetcher';
+import Fetcher from '../components/fetcher';
 import Calendar from '../components/calendar';
 import {Container, CardDeck, CardColumns, Tab, Row, Col, Nav} from 'react-bootstrap';
 import DashboardControl from '../components/dashboard_control';
