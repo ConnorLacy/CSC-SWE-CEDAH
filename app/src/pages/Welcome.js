@@ -1,32 +1,39 @@
 import React, {useState, useEffect} from 'react'
 import {connect} from 'react-redux';
-import SignupForm from '../components/SignupForm';
+import SignupForm from '../components/forms/signup_form';
 import {Row} from 'react-bootstrap';
-import LoginForm from '../components/LoginForm';
+import LoginForm from '../components/forms/login_form';
 import logo_blue_white from '../assets/logo_blue_white.png';
 import logo_blue_grey from '../assets/logo_blue_grey.png';
 import {NavLink, Redirect} from 'react-router-dom';
 
 const Welcome = (props) => {
     const [redirect, setRedirect] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const [signup, toggleForm] = useState(true);
+
+    let loaderProps = {
+        loading: loading, 
+        setLoading: setLoading,
+        toggleForm: toggleForm
+    }
 
     useEffect(() => {
         if(props.isAuthenticated) return setRedirect(true)
     },[props.isAuthenticated])
 
 
-    const [signup, toggleForm] = useState(true);
     var link, message, form, header;
     if(signup){
         header = 'Join the Team'
         message = 'Already have an account?'
         link = 'Log in'
-        form = <SignupForm toggleForm={toggleForm}/>
+        form = <SignupForm {...loaderProps}/>
     } else {
         header = 'Welcome back'
         message = 'Don\'t have an account?'
         link = 'Sign up'
-        form = <LoginForm/>
+        form = <LoginForm {...loaderProps}/>
     }
 
     if(redirect) return <Redirect push to="/fetcher"/>
