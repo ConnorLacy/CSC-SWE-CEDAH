@@ -16,7 +16,7 @@ export const appReducer = (state=initialState, action) => {
     switch(action.type){
         case CLOSE_MODAL: 
             return {
-                initialState
+                ...initialState
             }
         case SHOW_MODAL:
             return {

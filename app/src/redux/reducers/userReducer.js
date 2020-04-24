@@ -37,7 +37,7 @@ export default function userReducer(state = startState, action){
             }
         case LOGOUT_USER:
             return {
-                initialState
+                ...initialState
             }
         case REGISTRATION_SUCCESS:
             return {
