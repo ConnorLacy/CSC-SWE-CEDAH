@@ -1,5 +1,6 @@
 import React from 'react';
 import {formatName} from '../../helper';
+import {formatTime} from '../../helper';
 import {Card} from 'react-bootstrap';
 import clock from '../../assets/clock.svg';
 import phone from '../../assets/phone.svg';
@@ -10,21 +11,27 @@ import crown from '../../assets/crown.svg';
 const DetailCard = (props) => {
     var title;
     var body;
-    if(props.meeting){
-        title = <strong>{props.meeting.day}</strong>
+    const {
+        meeting,
+        ownerId,
+        member
+    } = props
+
+    if(meeting){
+        title = <strong>{meeting.day}</strong>
         body = (
             <>
                 <p>
                     <img alt="" className="icon" src={user}/>
-                    <span><strong>Host | </strong> {formatName(props.meeting.creator)}</span>
+                    <span><strong>Host </strong> {formatName(meeting.creator)}</span>
                 </p>
                 <p>
                     <img alt="" className="icon" src={clock}/>
-                    <span><strong>Start Time | </strong> {props.meeting.start_time}</span>
+                    <span><strong>Start Time </strong> {formatTime(meeting.start_time)}</span>
                 </p>
                 <p>
                     <img alt="" className="icon" src={clock}/>
-                    <span><strong>End Time | </strong> {props.meeting.end_time}</span>
+                    <span><strong>End Time </strong> {formatTime(meeting.end_time)}</span>
                 </p>
             </>
         )
@@ -32,21 +39,21 @@ const DetailCard = (props) => {
     else {
         title = (
                     <>
-                        {(props.ownerId === props.member.id) ? 
+                        {(ownerId === member.id) ? 
                             <img src={crown} alt="" style={{height: '2em', marginRight: 10}}/> : ''}
-                        <strong>{formatName(props.member.name)}</strong>
+                        <strong>{formatName(member.name)}</strong>
                     </>
                 )
         body = (
             <>
                 <p>
                     <img alt="" className="icon" src={phone}/>
-                    <span>{props.member.phone}</span>
+                    <span>{member.phone}</span>
                 </p>
                 <p>
                     <img alt="" className="icon" src={mail}/>
-                    <a href={"mailto: "  + props.member.email}>
-                        <span>{props.member.email}</span> 
+                    <a href={"mailto: "  + member.email}>
+                        <span>{member.email}</span> 
                     </a>
                 </p>
             </>
