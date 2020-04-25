@@ -1,20 +1,46 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { connect } from 'react-redux';
 import back from '../assets/back.svg';
 import Calendar from '../components/calendar';
 import LeaveGroup from '../components/forms/leave_group';
 import DetailCard from '../components/cards/detail_card';
-import {Col, Nav, Row, Tab, Tabs} from 'react-bootstrap';
+import {Button, ButtonGroup, Col, Container, Nav, Row, Tab, Tabs, Spinner} from 'react-bootstrap';
+import PossibleMeeting from '../components/cards/possible_meeting_card';
+import {} from 'react-bootstrap';
 
 const Groupviewer = (props) => {
-    const {location, history} = props
+    const [meetingPossibilities, setMeetingPossibilities] = useState();
+    const [loading, setLoading] = useState(false)
+    const {location, history, token} = props
+
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+
     var group = location.group || ''
     var groupId = group.id || ''
     var groupName = group.name || ''
-
     
     var memberCards = null
     var meetingCards = null
+
+    const predict = async (day) => {
+        console.log(day)
+        setLoading(true)
+        const response = await fetch(`https://semiotic-karma-248216.ue.r.appspot.com/engine/predict?id=${group.id}`, {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        }).then(response => response.json()).catch(err => console.log(err))
+        console.log('data: ', response.data)
+        let elements = response.data.map((possibleMeeting, index) => (
+            <PossibleMeeting meeting={possibleMeeting}/>
+        ))
+        setLoading(false)
+        setMeetingPossibilities(elements)
+    }
     
     try{
         console.log("Meetings: ", group && group.meetings)
@@ -108,7 +134,20 @@ const Groupviewer = (props) => {
                                     {meetingCards}
                                 </Tab>
                                 <Tab eventKey="meetingPossibilities" title="Meeting Possibilities">
-                                    {/* <MeetingPossibilities/> */}
+                                    <Container fluid>
+                                        <ButtonGroup>
+                                            {daysOfWeek.map(day => (
+                                                <Button onClick={predict}>{day}</Button>
+                                            ))}
+                                        </ButtonGroup>
+                                    </Container>
+                                    <div>
+                                        {loading ?
+                                            <Spinner animation="border" size="lg"/>
+                                            :
+                                            meetingPossibilities
+                                        }
+                                    </div>
                                 </Tab>
                                 <Tab eventKey="calendar" title="Calendar">
                                     <Calendar/>
@@ -129,7 +168,8 @@ const Groupviewer = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-    groups: state.groups.groups
+    groups: state.groups.groups,
+    token: state.user.token
 })
 
 export default connect(mapStateToProps, null)(Groupviewer);
