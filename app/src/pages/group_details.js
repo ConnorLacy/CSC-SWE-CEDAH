@@ -7,7 +7,8 @@ import DetailCard from '../components/cards/detail_card';
 import {Col, Nav, Row, Tab, Tabs} from 'react-bootstrap';
 
 const Groupviewer = (props) => {
-    var group = props.location.group || ''
+    const {location, history} = props
+    var group = location.group || ''
     var groupId = group.id || ''
     var groupName = group.name || ''
 
@@ -18,7 +19,7 @@ const Groupviewer = (props) => {
     try{
         console.log("Meetings: ", group && group.meetings)
         console.log("Members: ", group && group.members)
-        if(typeof(group) !== undefined){
+        if(group?.id){
             if(group.members.length > 0) {
                 console.log('mapping group members')
                 memberCards = group.members.map((member, index) => (
@@ -52,7 +53,7 @@ const Groupviewer = (props) => {
             <div className="header back-button">
                     <img 
                         alt=""
-                        onClick={props.history.goBack}
+                        onClick={history.goBack}
                         src={back}/>
                     <h1>{groupName}</h1>
             </div>

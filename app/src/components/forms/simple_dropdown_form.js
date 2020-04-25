@@ -12,6 +12,19 @@ const SimpleDropdownForm = (props) => {
     const [formGroup, setGroup] = useState()
     const [timeError, setTimeError] = useState('')
 
+    const {
+        userId,
+        createMeeting,
+        groups,
+        token,
+        title,
+        message
+    } = props
+
+    useEffect(() => {
+        setGroup(firstChild)
+    }, [token])
+
     const handleSubmit = () => {
         if(startTime>=endTime){
             setTimeError('End time must be after start')
@@ -30,35 +43,31 @@ const SimpleDropdownForm = (props) => {
                 startTime: `${startTime}:00`,
                 endTime: `${endTime}:00`,
                 duration: `${duration}`,
-                userId: `${props.userId}`,
+                userId: `${userId}`,
                 groupId: formGroup 
             }
-            props.createMeeting(formData, props.token)
+            createMeeting(formData, token)
     
             console.log('Form data: ', formData)
         }
         
     }
 
-    var groups = props.groups || ''
-    if(groups){
+    if(groups[0]?.id){
         var firstChild = groups[0].id
         var inner = groups.map((group, id) => (
             <option key={id} value={group.id}>{group.name}</option>))
     }
 
-    useEffect(() => {
-        setGroup(firstChild)
 
-    }, [props.token])
     return (
         <DropdownButton
             alignRight
-            title={props.title}
+            title={title}
             id="dropdown-menu-align-right"
             style={{height: '25em'}}
             >
-            <h4 style={{textAlign: 'center', padding: 10}}>{props.message}</h4>
+            <h4 style={{textAlign: 'center', padding: 10}}>{message}</h4>
             <Form validate="true">
                 <Form.Group controlId="exampleForm.SelectCustomSizeSm">
                     <Form.Label>Select Day</Form.Label>
