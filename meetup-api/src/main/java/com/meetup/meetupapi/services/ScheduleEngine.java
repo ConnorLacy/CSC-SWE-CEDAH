@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.meetup.meetupapi.model.MeetingPossibility;
+import com.meetup.meetupapi.model.MeetupGroup;
 public class ScheduleEngine {
 	
 	private String day;
@@ -16,7 +17,7 @@ public class ScheduleEngine {
 		allschedules.add(schedule);
 	}
 	@SuppressWarnings("deprecation")
-	public List<MeetingPossibility> calculatemeeting(double duration) {
+	public List<MeetingPossibility> calculatemeeting(double duration, MeetupGroup group) {
 		ArrayList<MeetingPossibility> possibilities = new ArrayList<MeetingPossibility>();
 		if(allschedules.size() == 0) return possibilities;
 		
@@ -40,21 +41,19 @@ public class ScheduleEngine {
 				}
 			}
 			if (test) {
-				MeetingPossibility meettime = new MeetingPossibility();
-				meettime.setDay(first.getDay());
 				Time start = new Time(0);
 				start.setHours((int) current);
 				if (current - Math.floor(current)!=0) {
 					start.setMinutes(30);
 				}
-				meettime.setStart_time(start);
 				Time end = new Time(0);
 				end.setHours((int) (current+duration));
 				if ((current+duration) - Math.floor(current+duration)!=0) {
 					end.setMinutes(30);
 				}
-				meettime.setEnd_time(end);
-				possibilities.add(meettime);
+				MeetingPossibility possible = new MeetingPossibility(day, start, end, 0, group);
+				System.out.println("Creating possible meeting: " + possible.toString());
+				possibilities.add(possible);
 				/*
 				 *
 				 */
