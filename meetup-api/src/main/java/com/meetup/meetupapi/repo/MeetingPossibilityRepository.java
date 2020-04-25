@@ -24,8 +24,8 @@ public interface MeetingPossibilityRepository extends JpaRepository<MeetingPossi
             long group_id);
 
     @Query(
-        value = "SELECT * FROM meeting_possibilities WHERE day = ?1 and start_time = ?2 and end_time = ?3 ;",
+        value = "SELECT * FROM meeting_possibilities WHERE day = ?1 and start_time = ?2 and end_time = ?3 and group_id = ?4 ;",
         nativeQuery = true
     )
-    public MeetingPossibility customFind(String day, Time start_time, Time end_time);
+    public MeetingPossibility customFind(String day, Time start_time, Time end_time, long groupId);
 }

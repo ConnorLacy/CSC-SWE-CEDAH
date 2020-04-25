@@ -191,7 +191,8 @@ public class MeetingController {
             JSONArray possibleArr = new JSONArray();
             for(MeetingPossibility possible: allmeetingpossibilities){
                 MeetingPossibility exists = meetingPossibilityRepository.customFind(
-                        possible.getDay(), possible.getStart_time(), possible.getEnd_time());
+                        possible.getDay(), possible.getStart_time(), 
+                        possible.getEnd_time(), (long)groupId);
                 if(exists != null) {
                     possibleArr.add(exists.json());
                 }

@@ -40,6 +40,7 @@ public class MeetupGroupController {
     public ResponseEntity<?> getMyData(@RequestParam("id") int userId){
         JSONObject response = new JSONObject();
         JSONArray groupArr = new JSONArray();
+        JSONArray possibleMeetingsArr = new JSONArray();
 
         int status = 200;
         List<MeetupGroup> userGroups;
@@ -98,9 +99,9 @@ public class MeetupGroupController {
                 groupObj.put("owner", owner);
                 groupObj.put("members", membersArr);
                 groupObj.put("meetings", meetingArr);
+                groupObj.put("possible_meetings", possibleMeetingsArr);
                 groupArr.add(groupObj);
             };
-
             response.put("groups", groupArr);
         } catch (Exception e){
             System.out.println("Query failed");
