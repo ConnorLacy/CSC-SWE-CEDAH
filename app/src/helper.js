@@ -13,3 +13,17 @@ export const validateEntry = (entry) => {
     if(!(/^([a-z]|[A-Z]|\s*|[0-9]){4,100}$/.test(entry))) return false
     return true
 }
+
+export const formatTime = (time) => {
+    let hour = time.slice(0,2)
+    let min = time.slice(2,5)
+    var dayHalf = ''
+    if(hour > 12){
+        hour = hour-12
+        dayHalf = 'pm'
+    } else{
+        dayHalf = 'am'
+    }
+    let trimmed = hour.toString().concat(min.concat(dayHalf))
+    return trimmed
+}
