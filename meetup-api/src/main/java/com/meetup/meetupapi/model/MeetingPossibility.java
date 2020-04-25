@@ -10,6 +10,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import org.json.simple.JSONObject;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -55,6 +58,28 @@ public class MeetingPossibility {
         this.start_time = start_time;
         this.end_time = end_time;
         this.group = group;
+    }
+
+    @Override
+    public String toString(){
+        return "Meeting Possibility: " + 
+        "Id: " + this.id +
+        "Start time: " + this.start_time   +
+        "End time: " + this.end_time +
+        "Vote Count: " +  this.vote_count +
+        "Group Id: " +  this.group;
+    }
+    
+    @SuppressWarnings("unchecked")
+    public JSONObject json(){
+        JSONObject obj = new JSONObject();
+        obj.put("id", this.id);
+        obj.put("day", this.day);
+        obj.put("startTime", this.start_time);
+        obj.put("endTime", this.end_time);
+        obj.put("voteCount", this.vote_count);
+        obj.put("groupId", this.group.getGroup_id());
+        return obj;
     }
     
 }
