@@ -3,18 +3,17 @@ import {connect} from 'react-redux';
 import {hideModal} from './redux/actions/app';
 import MyNav from './components/nav';
 import MyModal from './components/modal';
-import Welcome from './pages/welcome';
+import Welcome from './containers/welcome';
 import Fetcher from './components/fetcher';
-import Dashboard from './pages/dashboard';
-import Logout from './pages/logout';
-import Groupviewer from './pages/group_details';
+import Dashboard from './containers/dashboard';
+import Logout from './containers/logout';
+import Groupviewer from './containers/group_details';
 
 import {
   BrowserRouter as Router, 
   Route, 
   Redirect
 } from 'react-router-dom';
-
 
 const App = (props) => {
   return (
