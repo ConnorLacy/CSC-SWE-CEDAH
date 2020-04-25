@@ -36,7 +36,7 @@ const Groupviewer = (props) => {
         }).then(response => response.json()).catch(err => console.log(err))
         console.log('data: ', response.data)
         let elements = response.data.map((possibleMeeting, index) => (
-            <PossibleMeeting meeting={possibleMeeting}/>
+            <PossibleMeeting key={index} meeting={possibleMeeting}/>
         ))
         setLoading(false)
         setMeetingPossibilities(elements)
@@ -134,10 +134,10 @@ const Groupviewer = (props) => {
                                     {meetingCards}
                                 </Tab>
                                 <Tab eventKey="meetingPossibilities" title="Meeting Possibilities">
-                                    <Container fluid>
+                                    <Container fluid bsPrefix="daysOfWeek">
                                         <ButtonGroup>
-                                            {daysOfWeek.map(day => (
-                                                <Button onClick={predict}>{day}</Button>
+                                            {daysOfWeek.map((day, index) => (
+                                                <Button key={index} onClick={predict}>{day}</Button>
                                             ))}
                                         </ButtonGroup>
                                     </Container>
