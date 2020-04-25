@@ -152,7 +152,7 @@ const mapStateToProps = state => ({
     token: state.user.token,
     username: state.user.username,
     profile: state.user.profile,
-    groups: state.groups.groups,
+    groups: state.user.groups,
     isFetching: state.app.isFetching
 })
 

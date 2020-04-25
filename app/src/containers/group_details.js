@@ -158,7 +158,7 @@ const Groupviewer = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-    groups: state.groups.groups,
+    groups: state.user.groups,
     token: state.user.token
 })
 

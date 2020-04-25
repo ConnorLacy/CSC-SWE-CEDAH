@@ -124,7 +124,7 @@ const SimpleDropdownForm = (props) => {
 const mapStateToProps = state => ({
     userId: state.user.profile.id,
     token: state.user.token,
-    groups: state.groups.groups
+    groups: state.user.groups
 })
 
 const mapDispatchToProps = dispatch => ({
