@@ -6,13 +6,14 @@ import {Button, Form, Spinner} from 'react-bootstrap';
 const LoginForm = (props) => {
     const [username,  setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const { loading, loginError, userLoginFetch } = props;
 
     const handleSubmit = () => {
         let formUser = {
             username: username, 
             password: password
         }
-        props.userLoginFetch(formUser)
+        userLoginFetch(formUser)
     }
 
     return (
@@ -28,7 +29,7 @@ const LoginForm = (props) => {
                 { color: 'red', 
                 display: 'block', 
                 textAlign: 'center'}
-            }>{props.loginError}</Form.Label>
+            }>{loginError}</Form.Label>
             <Form.Group controlId="formGroupUsername">
                 <Form.Label>Username</Form.Label>
                 <Form.Control 
@@ -48,7 +49,7 @@ const LoginForm = (props) => {
                     onChange={e => setPassword(e.target.value)}
                     required/>
             </Form.Group>
-            {props.loading ?
+            {loading ?
                 <Button variant="primary" type="submit"> 
                     <Spinner
                             as="span"

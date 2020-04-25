@@ -6,7 +6,8 @@ import icon_white from '../assets/icon_white.png';
 
 
 const MyNav = (props) => {
-    if(!props.isAuthenticated) return <></>
+    const {isAuthenticated} = props
+    if(!isAuthenticated) return <></>
     else {
         return (
         <Navbar 
@@ -18,7 +19,7 @@ const MyNav = (props) => {
                 <img alt="" src={icon_white} style={{height: '3em'}}/>
             </Navbar.Brand>
             <Navbar.Brand>
-                {props.isAuthenticated}
+                {isAuthenticated}
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">

@@ -13,6 +13,14 @@ const SignupForm = (props) => {
     const [password2, setPassword2] = useState("");
     const [message, setMessage] = useState("");
 
+    const {
+        registrationError,
+        loading,
+        setLoading,
+        registerUser,
+        toggleForm,
+    } = props
+
 
     let formData = {
         fullName: fName.concat(' ', lName),
@@ -27,11 +35,11 @@ const SignupForm = (props) => {
             setMessage("Passwords do not match")
         }
         else {
-            props.setLoading(true);
+            setLoading(true);
             console.log("Form data: ", formData)
-            props.registerUser(formData).then(() => {
-                props.setLoading(false);
-                props.toggleForm(false)}
+            registerUser(formData).then(() => {
+                setLoading(false);
+                toggleForm(false)}
             ) 
         }
     }
@@ -43,7 +51,7 @@ const SignupForm = (props) => {
                     { color: 'red', 
                     display: 'block', 
                     textAlign: 'center'}
-                }>{props.registrationError}</Form.Label>
+                }>{registrationError}</Form.Label>
                 <Form.Row>
                     <Form.Group as={Col} controlId="fname">
                         <Form.Label>First Name</Form.Label>
@@ -123,7 +131,7 @@ const SignupForm = (props) => {
                             />
                     </Form.Group>
                 </Form.Row>
-                {props.loading ?
+                {loading ?
                     <Button variant="primary" type="submit"> 
                         <Spinner
                                 as="span"

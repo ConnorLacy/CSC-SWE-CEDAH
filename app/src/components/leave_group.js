@@ -10,19 +10,27 @@ const LeaveGroup = (props) => {
     const [loading, setLoading] = useState(false)
     const [redirect, setRedirect] = useState(false)
 
+    const {
+        showModal,
+        groupName,
+        groupId,
+        userId,
+        token,
+        leaveGroup,
+    } = props
+
     useEffect(() => {
-        if(props.showModal === true){
+        if(showModal === true){
             setRedirect(true)
         }
-    }, [props.showModal])
+    }, [showModal])
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        if(name.localeCompare(props.groupName) === 0){
+    const handleSubmit = () => {
+        if(name.localeCompare(groupName) === 0){
             setLoading(true)
             console.log('leaving group')
-            console.log(`leaving ${props.groupName} as user ${props.userId} with token ${props.token}`)
-            props.leaveGroup(props.groupId, props.userId, props.token)
+            console.log(`leaving ${groupName} as user ${userId} with token ${token}`)
+            leaveGroup(groupId, userId, token)
         }
         else{
             setErr('Name must match exactly to confirm your leave.')
@@ -43,8 +51,7 @@ const LeaveGroup = (props) => {
                         style={{
                             maxWidth: 500,
                             minWidth: 250
-                        }}
-                        onSubmit={e => handleSubmit(e)}>
+                        }}>
                         <Form.Group controlId="formgroupName">
                             <p style={{color: 'red'}}>{err}</p>
                             <Form.Label>Please type the name of the group exactly to leave</Form.Label>
@@ -72,6 +79,7 @@ const LeaveGroup = (props) => {
                             <Button 
                                 variant="danger" 
                                 type="submit"
+                                onClick={handleSubmit}
                                 style={{display: 'block', margin: 'auto'}}>Leave Group</Button>
                         }            
                     </Form>  
