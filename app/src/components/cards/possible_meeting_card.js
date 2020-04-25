@@ -2,7 +2,7 @@ import React from 'react';
 import {formatTime} from '../../helper';
 import {Card} from 'react-bootstrap';
 import clock from '../../assets/clock.svg';
-import vote from '../../assets/vote.svg';
+import VoteButton from '../vote';
 
 const PossibleMeeting = (props) => {
     const { meeting } = props
@@ -19,8 +19,7 @@ const PossibleMeeting = (props) => {
                 <span><strong>End Time </strong> {formatTime(meeting.endTime)}</span>
             </p>
             <p>
-                <img alt="" className="icon" src={vote}/>
-                <span> {meeting.voteCount}</span>
+                <VoteButton meetingId={meeting.id} voteCount={meeting.voteCount}/>
             </p>
         </>
     )

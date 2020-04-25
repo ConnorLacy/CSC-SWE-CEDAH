@@ -20,6 +20,23 @@ export const createMeeting = (formData, token) => {
     }
 }
 
+export const vote = (meetingId, token) => {
+    return async dispatch => {
+        const response = await fetch(`${BASE_URL}/engine/vote?meetingId=${meetingId}`, {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+        }).then(d => d.json()).catch(err=> console.log(err))
+        if(response?.message){
+            console.log(response.message);
+        }
+    }
+}
+
 const showModal = (type, success, message) => ({
     type: type,
     payload: {success: success, message: message}
