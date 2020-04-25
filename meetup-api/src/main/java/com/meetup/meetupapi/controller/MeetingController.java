@@ -182,15 +182,23 @@ public class MeetingController {
                     SaturdayEngine.addSchedule(saturdayschedule);
                 }
                 allmeetingpossibilities.addAll(SundayEngine.calculatemeeting(1, group));
+
             } catch (Exception e){
                 status = 500;
-                response.put("message", "Exception adding schedules to builder");
+                response.put("message", e.toString());
             }
             
             JSONArray possibleArr = new JSONArray();
             for(MeetingPossibility possible: allmeetingpossibilities){
-                meetingPossibilityRepository.save(possible);
-                possibleArr.add(possible.json());
+                MeetingPossibility exists = meetingPossibilityRepository.customFind(
+                        possible.getDay(), possible.getStart_time(), possible.getEnd_time());
+                if(exists != null) {
+                    possibleArr.add(exists.json());
+                }
+                else {
+                    meetingPossibilityRepository.save(possible);
+                    possibleArr.add(possible.json());
+                }
             }
             
             response.put("data", possibleArr);
