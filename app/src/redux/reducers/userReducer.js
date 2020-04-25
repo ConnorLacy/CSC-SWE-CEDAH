@@ -64,7 +64,7 @@ export default function userReducer(state = initialState, action){
         case ADD_POSSIBLE_MEETINGS:
             return {
                 ...state,
-                groups: {...state.groups.map(group => {
+                groups: [...state.groups.map(group => {
                     if(group.id === action.id){
                         return {
                             ...group,
@@ -74,7 +74,7 @@ export default function userReducer(state = initialState, action){
                     else{
                         return {...group}
                     }
-                })}
+                })]
             }
         default:
             return state;
