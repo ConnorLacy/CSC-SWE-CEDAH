@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { Button, Form, Spinner } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import {leaveGroup} from '../redux/actions/groups';
+import {leaveGroup} from '../../redux/actions/groups';
 import {Redirect} from 'react-router-dom';
 
 const LeaveGroup = (props) => {
@@ -25,7 +25,8 @@ const LeaveGroup = (props) => {
         }
     }, [showModal])
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault()
         if(name.localeCompare(groupName) === 0){
             setLoading(true)
             console.log('leaving group')
@@ -79,7 +80,7 @@ const LeaveGroup = (props) => {
                             <Button 
                                 variant="danger" 
                                 type="submit"
-                                onClick={handleSubmit}
+                                onClick={e => handleSubmit(e)}
                                 style={{display: 'block', margin: 'auto'}}>Leave Group</Button>
                         }            
                     </Form>  
