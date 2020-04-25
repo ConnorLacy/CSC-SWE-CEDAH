@@ -285,6 +285,15 @@ $headerHeight: 75px;
     .row h1 {
         margin-bottom: 25px;
     }
+    div.daysOfWeek-fluid {
+        margin-bottom: 15px;
+    }
+    div.daysOfWeek-fluid:after {
+        border-bottom: none;
+        .btn-primary {
+            outline: red;
+        }
+    }
 }
 
 .leave-confirm {
