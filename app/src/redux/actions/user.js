@@ -14,7 +14,8 @@ import {
     requestComplete
 } from './requests';
 
-const BASE_URL = "https://semiotic-karma-248216.ue.r.appspot.com/"
+// const BASE_URL = "https://semiotic-karma-248216.ue.r.appspot.com"
+const BASE_URL = "http://127.0.0.1:8080"
 
 const showModal = (type, success, message) => ({
     type: type,
