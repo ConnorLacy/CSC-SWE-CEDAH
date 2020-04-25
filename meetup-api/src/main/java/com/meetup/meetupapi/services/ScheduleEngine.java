@@ -16,8 +16,10 @@ public class ScheduleEngine {
 		allschedules.add(schedule);
 	}
 	@SuppressWarnings("deprecation")
-	public List calculatemeeting(double duration) {
+	public List<MeetingPossibility> calculatemeeting(double duration) {
 		ArrayList<MeetingPossibility> possibilities = new ArrayList<MeetingPossibility>();
+		if(allschedules.size() == 0) return possibilities;
+		
 		fulldailyschedule first = (fulldailyschedule)allschedules.get(0);
 		for (int i = 0; i < first.size(); i++) {
 			boolean test = true; //if false, it is not a viable meeting time
