@@ -4,7 +4,9 @@ import {
     LOGOUT_USER,
     REGISTRATION_SUCCESS,
     REGISTRATION_ERROR,
-    LOAD_PROFILE
+    LOAD_PROFILE,
+    SET_GROUPS,
+    ADD_POSSIBLE_MEETINGS
 } from '../actions/types';
 
 const initialState = {
@@ -13,15 +15,11 @@ const initialState = {
     isAuthenticated: false,
     loginError: null,
     registrationSuccess: false,
-    registrationError: null
+    registrationError: null,
+    groups: null
 }
 
-const startState = {
-    ...initialState,
-    token: localStorage.getItem('token')
-}
-
-export default function userReducer(state = startState, action){
+export default function userReducer(state = initialState, action){
     switch(action.type){
         case LOGIN_USER:
             return {
@@ -53,6 +51,30 @@ export default function userReducer(state = startState, action){
             return {
                 ...state,
                 profile: action.payload 
+            }
+        case SET_GROUPS:
+            return {
+                ...state,
+                groups: action.payload
+        }
+        case LOGOUT_USER:
+            return {
+                ...initialState
+            }
+        case ADD_POSSIBLE_MEETINGS:
+            return {
+                ...state,
+                groups: {...state.groups.map(group => {
+                    if(group.id === action.id){
+                        return {
+                            ...group,
+                            'possibilities': action.data
+                        }
+                    }
+                    else{
+                        return {...group}
+                    }
+                })}
             }
         default:
             return state;
