@@ -8,7 +8,8 @@ const LoginForm = (props) => {
     const [password, setPassword] = useState('');
     const { loading, loginError, userLoginFetch } = props;
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault()
         let formUser = {
             username: username, 
             password: password
@@ -62,7 +63,7 @@ const LoginForm = (props) => {
                     <span className="sr-only">Loading...</span>
                 </Button>
                 :
-                <Button variant="primary" onClick={handleSubmit}>Submit</Button>
+                <Button variant="primary" onClick={e => handleSubmit(e)}>Submit</Button>
             }
         </Form>
     )

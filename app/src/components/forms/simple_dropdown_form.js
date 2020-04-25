@@ -25,7 +25,8 @@ const SimpleDropdownForm = (props) => {
         setGroup(firstChild)
     }, [token])
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault()
         if(startTime>=endTime){
             setTimeError('End time must be after start')
             setTimeout(() => {
@@ -113,7 +114,7 @@ const SimpleDropdownForm = (props) => {
                         </Form.Control>
                     </Form.Group>
                 <Form.Row>
-                    <Button variant="primary" onClick={handleSubmit}>Create</Button>
+                    <Button variant="primary" onClick={e => handleSubmit(e)}>Create</Button>
                 </Form.Row>
             </Form>
         </DropdownButton>

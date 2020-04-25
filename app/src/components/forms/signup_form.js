@@ -30,7 +30,8 @@ const SignupForm = (props) => {
         password: password,
     }
 
-    const validateAndSubmit = () => {
+    const validateAndSubmit = (e) => {
+        e.preventDefault()
         if(password !== password2){
             setMessage("Passwords do not match")
         }
@@ -144,7 +145,7 @@ const SignupForm = (props) => {
                         <span className="sr-only">Loading...</span>
                     </Button>
                     :
-                    <Button variant="primary" onClick={validateAndSubmit}>Submit</Button>
+                    <Button variant="primary" onClick={e => validateAndSubmit(e)}>Submit</Button>
                 }
             </Form>
         )
