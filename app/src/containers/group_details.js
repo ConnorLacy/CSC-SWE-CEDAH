@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import back from '../assets/back.svg';
 import Calendar from '../components/calendar';
-import LeaveGroup from '../components/leave_group';
+import LeaveGroup from '../components/forms/leave_group';
 import DetailCard from '../components/cards/detail_card';
 import {Col, Nav, Row, Tab, Tabs} from 'react-bootstrap';
 
