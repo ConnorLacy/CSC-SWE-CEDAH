@@ -147,6 +147,7 @@ public class MeetingController {
         List<Long> userIds = new ArrayList<Long>();
         ArrayList<MeetingPossibility> allmeetingpossibilities = new ArrayList<MeetingPossibility>(); //will contain all meeting possibilities
         try {
+            MeetupGroup group = meetupGroupRepository.findById((long)groupId);
             // For each membership, get userId
             members = groupMembershipRepository.findMembers(groupId);
             //for each day in week, creates a scheduleEngine instance
@@ -180,7 +181,7 @@ public class MeetingController {
                     fulldailyschedule saturdayschedule = new fulldailyschedule("Saturday", id, availabilitiesList);
                     SaturdayEngine.addSchedule(saturdayschedule);
                 }
-                allmeetingpossibilities.addAll(SundayEngine.calculatemeeting(1));
+                allmeetingpossibilities.addAll(SundayEngine.calculatemeeting(1, group));
             } catch (Exception e){
                 status = 500;
                 response.put("message", "Exception adding schedules to builder");
@@ -188,13 +189,8 @@ public class MeetingController {
             
             JSONArray possibleArr = new JSONArray();
             for(MeetingPossibility possible: allmeetingpossibilities){
-                JSONObject inner = new JSONObject();
-                inner.put("id", possible.getId());
-                inner.put("day", possible.getDay());
-                inner.put("startTime", possible.getStart_time());
-                inner.put("endTime", possible.getEnd_time());
-                inner.put("voteCount", possible.getVote_count());
-                possibleArr.add(inner);
+                meetingPossibilityRepository.save(possible);
+                possibleArr.add(possible.json());
             }
             
             response.put("data", possibleArr);
