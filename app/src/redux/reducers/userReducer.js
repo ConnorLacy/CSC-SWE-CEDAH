@@ -68,7 +68,7 @@ export default function userReducer(state = initialState, action){
                     if(group.id === action.id){
                         return {
                             ...group,
-                            'possibilities': action.data
+                            possible_meetings: [...action.data]
                         }
                     }
                     else{

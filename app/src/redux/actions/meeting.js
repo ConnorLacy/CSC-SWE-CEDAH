@@ -1,7 +1,7 @@
 import {ADD_POSSIBLE_MEETINGS, SHOW_MODAL} from './types';
 
-// const BASE_URL = "https://semiotic-karma-248216.ue.r.appspot.com"
-const BASE_URL = "http://127.0.0.1:8080"
+const BASE_URL = "https://semiotic-karma-248216.ue.r.appspot.com"
+// const BASE_URL = "http://127.0.0.1:8080"
 
 const showModal = (success, message) => ({
     type: SHOW_MODAL,
@@ -35,7 +35,7 @@ export const createMeeting = (formData, token) => {
 
 export const getPossibleMeetings = (groupId, token) => {
     return async dispatch => {
-        const response = await fetch(`https://semiotic-karma-248216.ue.r.appspot.com/engine/predict?id=${groupId}`, {
+        const response = await fetch(`${BASE_URL}/engine/predict?id=${groupId}`, {
             method: 'POST',
             cache: 'no-cache',
             headers: {
@@ -46,7 +46,7 @@ export const getPossibleMeetings = (groupId, token) => {
         }).then(response => response.json()).catch(err => console.log(err))
 
         if(response?.message) {
-            console.log('Something went wrong')
+            console.log('Something went wrong: ', response.message)
             return
         }
 

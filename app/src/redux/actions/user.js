@@ -14,11 +14,11 @@ import {
     requestComplete
 } from './requests';
 
-// const BASE_URL = "https://semiotic-karma-248216.ue.r.appspot.com"
-const BASE_URL = "http://127.0.0.1:8080"
+const BASE_URL = "https://semiotic-karma-248216.ue.r.appspot.com"
+// const BASE_URL = "http://127.0.0.1:8080"
 
-const showModal = (type, success, message) => ({
-    type: type,
+const showModal = (success, message) => ({
+    type: SHOW_MODAL,
     payload: {success: success, message: message}
 })
 const registrationError = message => ({
@@ -68,9 +68,15 @@ export const userLoginFetch = user => {
                 dispatch(requestComplete())
             })
         }
-        
+        else if(data?.user){
+            return batch(() => {
+                dispatch(loginUser(data.user, data.jwt, true))
+                dispatch(requestComplete())
+            })
+        }
+
         return batch(() => {
-            dispatch(loginUser(data.user, data.jwt, true))
+            dispatch(showModal(false, 'Error contacting server'))
             dispatch(requestComplete())
         })
     }
@@ -91,7 +97,6 @@ export const getUserInfo = (username, token) => {
         
         return batch(() => {
             dispatch(loadProfile(data.user))
-            dispatch(requestComplete())
         })
     }
 }
@@ -127,7 +132,6 @@ export const registerUser = (formData) => {
         
         return batch(() => {
             dispatch(showModal(
-                    SHOW_MODAL, 
                     true, 
                     'You created an account successfully! Go ahead and log in to get started!'))
             dispatch(registrationSuccess(true))
