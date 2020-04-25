@@ -1,6 +1,7 @@
 import {
     SET_GROUPS,
-    LOGOUT_USER
+    LOGOUT_USER,
+    ADD_POSSIBLE_MEETINGS
 } from '../actions/types';
 
 const initialState = {
@@ -18,6 +19,19 @@ export default function groupReducer(state = initialState, action){
             return {
                 ...initialState
             }
+        case ADD_POSSIBLE_MEETINGS:
+            // return state.groups.map(group => {
+            //         if(group.id === action.id){
+            //             return {
+            //                 ...group,
+            //                 'possibilities': action.data
+            //             }
+            //         }
+            //         else{
+            //             return {...group}
+            //         }
+            //     })
+            
         default: 
             return state;
     }

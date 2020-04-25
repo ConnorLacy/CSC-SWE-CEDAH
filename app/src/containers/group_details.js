@@ -1,17 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import { connect } from 'react-redux';
+import {getPossibleMeetings} from '../redux/actions/meeting';
 import back from '../assets/back.svg';
 import Calendar from '../components/calendar';
 import LeaveGroup from '../components/forms/leave_group';
 import DetailCard from '../components/cards/detail_card';
 import {Button, ButtonGroup, Col, Container, Nav, Row, Tab, Tabs, Spinner} from 'react-bootstrap';
 import PossibleMeeting from '../components/cards/possible_meeting_card';
-import {} from 'react-bootstrap';
 
 const Groupviewer = (props) => {
     const [meetingPossibilities, setMeetingPossibilities] = useState();
     const [loading, setLoading] = useState(false)
-    const {location, history, token} = props
+    const {location, history, token, getPossibleMeetings, groups} = props
 
     const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
@@ -25,21 +25,11 @@ const Groupviewer = (props) => {
     const predict = async (day) => {
         console.log(day)
         setLoading(true)
-        const response = await fetch(`https://semiotic-karma-248216.ue.r.appspot.com/engine/predict?id=${group.id}`, {
-            method: 'POST',
-            cache: 'no-cache',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        }).then(response => response.json()).catch(err => console.log(err))
-        console.log('data: ', response.data)
-        let elements = response.data.map((possibleMeeting, index) => (
-            <PossibleMeeting key={index} meeting={possibleMeeting}/>
-        ))
+        getPossibleMeetings(groupId, token)
+        // let elements = response.data.map((possibleMeeting, index) => (
+        //     <PossibleMeeting key={index} meeting={possibleMeeting}/>
+        // ))
         setLoading(false)
-        setMeetingPossibilities(elements)
     }
     
     try{
@@ -172,4 +162,8 @@ const mapStateToProps = (state) => ({
     token: state.user.token
 })
 
-export default connect(mapStateToProps, null)(Groupviewer);
+const mapDispatchToProps = dispatch => ({
+    getPossibleMeetings: (groupId, token) => dispatch(getPossibleMeetings(groupId, token))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Groupviewer);
