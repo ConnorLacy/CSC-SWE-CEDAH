@@ -52,7 +52,6 @@ public class ScheduleEngine {
 					end.setMinutes(30);
 				}
 				MeetingPossibility possible = new MeetingPossibility(day, start, end, 0, group);
-				System.out.println("Creating possible meeting: " + possible.toString());
 				possibilities.add(possible);
 				/*
 				 *
